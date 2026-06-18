@@ -21,8 +21,6 @@ export default withRules(defineConfig({
 }))
 ```
 
-`recommended` is generated from the plugin rules and always sets each guideline rule to `'error'`.
-
 ## Included rules
 
 | Rule                                                   | Description                                                                             |
