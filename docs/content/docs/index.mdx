@@ -1,5 +1,53 @@
 ---
 title: Getting started
-description: How to get started.
+description: What this rule pack is and how to install it.
 ---
 
+`@wanner.work/oxlint-rules` is an [oxlint](https://oxc.rs/docs/guide/usage/linter.html)
+config wrapper that bundles a set of opinionated rules for writing consistent
+React + TypeScript code. It enforces a small folder convention and a set of
+declaration-style rules (component shape, method exports, hook naming, etc.)
+so that every file in your project follows the same pattern.
+
+## Installation
+
+Install the package alongside `oxlint` in your project:
+
+```bash
+pnpm add -D @wanner.work/oxlint-rules oxlint
+```
+
+## Usage
+
+Import `defineConfigWithRules` from the package and use it in place of
+`defineConfig` from `oxlint`. The wrapper merges the recommended rule set into
+your existing config:
+
+```ts title="oxlint.config.ts"
+import { defineConfigWithRules } from '@wanner.work/oxlint-rules'
+
+export default defineConfigWithRules({
+  // your own oxlint config goes here
+})
+```
+
+The `recommended` set is enabled automatically. You can layer your own
+overrides on top — the wrapper uses `defu` under the hood, so the last value
+wins.
+
+## What's next?
+
+<Cards>
+  <Card title="Folder convention" href="/docs/folder" />
+  <Card title="Component rules" href="/docs/components" />
+  <Card title="Method rules" href="/docs/methods" />
+  <Card title="Hook rules" href="/docs/hooks" />
+  <Card title="Interface rules" href="/docs/interfaces" />
+  <Card title="Constant rules" href="/docs/constants" />
+</Cards>
+
+<Callout type="info">
+  The rules are folder-scoped, not whole-project. Adding the package to a
+  project that does not follow the folder convention is harmless — the rules
+  only fire on the folders they care about.
+</Callout>

@@ -1,11 +1,14 @@
 import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
-import { appName, gitConfig } from './shared';
+import { gitConfig } from './shared';
 
 export function baseOptions(): BaseLayoutProps {
   return {
     nav: {
-      // JSX supported
-      title: appName,
+      title: <div>
+        <p className="dark:text-white font-mono">
+          @wanner.work/<span className="font-bold pl-0.5">rules</span>
+        </p>
+      </div>,
     },
     githubUrl: `https://github.com/${gitConfig.user}/${gitConfig.repo}`,
   };
