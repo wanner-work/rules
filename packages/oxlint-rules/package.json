@@ -1,8 +1,15 @@
 {
   "name": "@wanner.work/oxlint-rules",
-  "version": "1.0.0",
+  "version": "1.0.0-rc.0",
   "description": "oxlint rules to write consistent code.",
+  "keywords": [
+    "linting",
+    "oxlint"
+  ],
   "homepage": "https://wanner.work/rules",
+  "bugs": {
+    "url": "https://github.com/wanner-work/rules/issues"
+  },
   "license": "MIT",
   "author": "Jonas Wanner <jonas@wanner.com>",
   "repository": {
