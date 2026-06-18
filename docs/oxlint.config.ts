@@ -1,6 +1,6 @@
-import { withRules } from '@wanner.work/oxlint-rules'
+import { defineConfigWithRules } from '@wanner.work/oxlint-rules'
 
-export default withRules({
+export default defineConfigWithRules({
   options: {
     typeAware: true,
     typeCheck: true
