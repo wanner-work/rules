@@ -30,7 +30,8 @@
     "prepublishOnly": "pnpm run build",
     "format": "oxfmt --write .",
     "lint": "oxlint",
-    "check": "node tests/run-oxlint-tests.mjs"
+    "check": "node tests/run-oxlint-tests.mjs",
+    "release": "bumpp"
   },
   "dependencies": {
     "defu": "6.1.7"
@@ -38,6 +39,7 @@
   "devDependencies": {
     "@types/node": "^25.9.1",
     "@typescript/native-preview": "7.0.0-dev.20260421.2",
+    "bumpp": "^11.1.0",
     "oxfmt": "^0.52.0",
     "oxlint": "^1.67.0",
     "oxlint-tsgolint": "^0.23.0",
