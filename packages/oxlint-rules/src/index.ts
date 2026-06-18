@@ -58,7 +58,7 @@ export const recommended = Object.fromEntries(
   Object.keys(plugin.rules).map((ruleName) => [`rules/${ruleName}`, 'error'])
 ) as Record<string, 'error'>
 
-export function withRules(config?: OxlintConfig) {
+export function defineConfigWithRules(config?: OxlintConfig) {
   return defineConfig(
     defu(
       config,

@@ -13,12 +13,11 @@ pnpm add -D @wanner.work/oxlint-rules oxlint
 Then use the config wrapper.
 
 ```ts
-import { defineConfig } from 'oxlint'
-import { withRules } from '@clavisit/oxlint-guidelines-plugin'
+import { defineConfigWithRules } from '@wanner.work/oxlint-rules'
 
-export default withRules(defineConfig({
+export default defineConfigWithRules({
   ...
-}))
+})
 ```
 
 ## Included rules
