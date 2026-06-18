@@ -2,10 +2,12 @@ import { NextRequest, NextResponse } from 'next/server';
 import { isMarkdownPreferred, rewritePath } from 'fumadocs-core/negotiation';
 import { docsContentRoute, docsRoute } from '@/lib/shared';
 
+// oxlint-disable-next-line typescript/unbound-method
 const { rewrite: rewriteDocs } = rewritePath(
   `${docsRoute}{/*path}`,
   `${docsContentRoute}{/*path}/content.md`,
 );
+// oxlint-disable-next-line typescript/unbound-method
 const { rewrite: rewriteSuffix } = rewritePath(
   `${docsRoute}{/*path}.md`,
   `${docsContentRoute}{/*path}/content.md`,

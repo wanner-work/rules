@@ -1,0 +1,177 @@
+---
+title: Interface Rules
+description: All rules regarding interface declarations
+---
+
+import { Check, X } from 'lucide-react';
+
+Rules that govern how standalone interface files are written. Every rule is
+enabled by the [recommended](/docs) config and applies to `.ts` / `.tsx` files
+inside a `/interfaces/` folder of your project.
+
+## `interface-name-pascal-case`
+
+Require interface names to use PascalCase — a leading uppercase letter followed
+by alphanumeric characters only.
+
+<div className="not-prose my-6 flex flex-col gap-3">
+  <span className="inline-flex w-fit items-center gap-1 rounded-md border border-green-500/30 bg-green-500/10 px-1.5 py-0.5 text-xs font-medium text-green-600 dark:text-green-400">
+    <Check className="size-3" />
+    Do
+  </span>
+```ts title="src/interfaces/UserData.ts"
+export default interface UserData {
+  id: string
+}
+```
+  <span className="inline-flex w-fit items-center gap-1 rounded-md border border-red-500/30 bg-red-500/10 px-1.5 py-0.5 text-xs font-medium text-red-600 dark:text-red-400">
+    <X className="size-3" />
+    Don't
+  </span>
+```ts title="src/interfaces/userData.ts"
+export default interface userData {
+  id: string
+}
+```
+</div>
+
+Underscores and dashes are not allowed in interface names — only alphanumeric
+characters, with the first character uppercase.
+
+## `interface-filename-matches-name`
+
+Require interface file names to match interface names (excluding extension).
+
+<div className="not-prose my-6 flex flex-col gap-3">
+  <span className="inline-flex w-fit items-center gap-1 rounded-md border border-green-500/30 bg-green-500/10 px-1.5 py-0.5 text-xs font-medium text-green-600 dark:text-green-400">
+    <Check className="size-3" />
+    Do
+  </span>
+```ts title="src/interfaces/CustomerProfile.ts"
+export default interface CustomerProfile {
+  customerId: string
+}
+```
+  <span className="inline-flex w-fit items-center gap-1 rounded-md border border-red-500/30 bg-red-500/10 px-1.5 py-0.5 text-xs font-medium text-red-600 dark:text-red-400">
+    <X className="size-3" />
+    Don't
+  </span>
+```ts title="src/interfaces/CustomerRecord.ts"
+export default interface CustomerProfile {
+  customerId: string
+}
+```
+</div>
+
+A matching file name keeps the import path and the type name in lockstep, which
+matters when the interface is consumed across many files.
+
+## `interface-one-per-file`
+
+Require exactly one interface declaration per interface file.
+
+<div className="not-prose my-6 flex flex-col gap-3">
+  <span className="inline-flex w-fit items-center gap-1 rounded-md border border-green-500/30 bg-green-500/10 px-1.5 py-0.5 text-xs font-medium text-green-600 dark:text-green-400">
+    <Check className="size-3" />
+    Do
+  </span>
+```ts title="src/interfaces/ApiResult.ts"
+export default interface ApiResult {
+  success: boolean
+}
+```
+  <span className="inline-flex w-fit items-center gap-1 rounded-md border border-red-500/30 bg-red-500/10 px-1.5 py-0.5 text-xs font-medium text-red-600 dark:text-red-400">
+    <X className="size-3" />
+    Don't
+  </span>
+```ts title="src/interfaces/BillingAddress.ts"
+export default interface BillingAddress {
+  street: string
+}
+
+interface ShippingAddress {
+  street: string
+}
+```
+</div>
+
+If you need a second interface, move it to its own file under
+`src/interfaces/`. This keeps each type easy to find and keeps the
+file-name / interface-name contract enforceable.
+
+## `interface-require-default-export`
+
+Require the interface in an interface file to be the default export.
+
+<div className="not-prose my-6 flex flex-col gap-3">
+  <span className="inline-flex w-fit items-center gap-1 rounded-md border border-green-500/30 bg-green-500/10 px-1.5 py-0.5 text-xs font-medium text-green-600 dark:text-green-400">
+    <Check className="size-3" />
+    Do
+  </span>
+```ts title="src/interfaces/InvoiceData.ts"
+export default interface InvoiceData {
+  invoiceId: string
+}
+```
+  <span className="inline-flex w-fit items-center gap-1 rounded-md border border-red-500/30 bg-red-500/10 px-1.5 py-0.5 text-xs font-medium text-red-600 dark:text-red-400">
+    <X className="size-3" />
+    Don't
+  </span>
+```ts title="src/interfaces/InvoiceData.ts"
+export interface InvoiceData {
+  invoiceId: string
+}
+```
+</div>
+
+The rule also accepts the equivalent `export { Name as default }` form:
+
+```ts title="src/interfaces/ReceiptData.ts"
+interface ReceiptData {
+  receiptId: string
+}
+
+export { ReceiptData as default }
+```
+
+<Callout type="info">
+  A default export lets the importer rename the interface to fit the surrounding
+  context (e.g. `InvoiceData as Invoice`) without having to know the original
+  file-level export name.
+</Callout>
+
+## `interface-no-i-prefix`
+
+Disallow interface names that start with an `I` prefix (Hungarian-style
+notation).
+
+<div className="not-prose my-6 flex flex-col gap-3">
+  <span className="inline-flex w-fit items-center gap-1 rounded-md border border-green-500/30 bg-green-500/10 px-1.5 py-0.5 text-xs font-medium text-green-600 dark:text-green-400">
+    <Check className="size-3" />
+    Do
+  </span>
+```ts title="src/interfaces/UserProfile.ts"
+export default interface UserProfile {
+  name: string
+}
+```
+  <span className="inline-flex w-fit items-center gap-1 rounded-md border border-red-500/30 bg-red-500/10 px-1.5 py-0.5 text-xs font-medium text-red-600 dark:text-red-400">
+    <X className="size-3" />
+    Don't
+  </span>
+```ts title="src/interfaces/IUserProfile.ts"
+export default interface IUserProfile {
+  name: string
+}
+```
+</div>
+
+The rule only flags names that start with a capital `I` followed by another
+uppercase letter (e.g. `IUser`, `IUserProfile`). Identifiers like `index` or
+`item` are not affected.
+
+<Callout type="info">
+  TypeScript types and interfaces are structurally typed, so the `I` prefix no
+  longer communicates information that the compiler cannot infer. Drop it and
+  let the name describe the data, not the declaration kind.
+</Callout>

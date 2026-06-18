@@ -1,0 +1,77 @@
+---
+title: Folder convention
+description: How to organize your project files and where to put each kind of code.
+---
+
+Every project that uses this rule pack is expected to follow a single folder
+convention. The convention is intentionally small: one `src/` directory at the
+project root, with one well-named folder per kind of file.
+
+<Callout type="info">
+  Not every project needs every folder. Pick the ones that match what your
+  project actually contains — a project without enums or classes is perfectly
+  fine to leave those folders out. The rules only fire on the folders that
+  exist.
+</Callout>
+
+## The tree
+
+```text
+/
+└── src/
+    ├── styles/
+    ├── methods/
+    ├── components/
+    ├── hooks/
+    ├── interfaces/
+    ├── types/
+    ├── constants/
+    ├── enums/
+    ├── classes/
+    ├── ui/        (shadcn/ui)
+    ├── lib/       (external files — linting ignored)
+    ├── app/       (Next.js app router)
+    └── routes/    (React Router / TanStack Router)
+```
+
+<Callout type="info">
+  Always use the `src/` directory for `.ts` and `.js` files. Folders on the root are
+  not part of the lintable surface.
+</Callout>
+
+## What goes where
+
+| Folder | Purpose | Rule pack |
+| ------ | ------- | --------- |
+| `src/methods/` | Standalone, reusable method files. | [Method rules](/docs/methods) |
+| `src/components/` | React component files (`.jsx` / `.tsx`). | [Component rules](/docs/components) |
+| `src/hooks/` | React hook files. | [Hook rules](/docs/hooks) |
+| `src/interfaces/` | Standalone TypeScript interface files. | [Interface rules](/docs/interfaces) |
+| `src/types/` | Shared type aliases, generic types, and `Options` interfaces. | — |
+| `src/constants/` | Readonly constant groups. | [Constant rules](/docs/constants) |
+| `src/enums/` | TypeScript enums. | — |
+| `src/classes/` | Plain TypeScript classes. | — |
+| `src/styles/` | Global stylesheets (CSS, SCSS, etc.). | — |
+| `src/ui/` | Generated UI primitives (e.g. `shadcn/ui`). | — |
+| `src/lib/` | Third-party or vendored code that you do not control. | Linting ignored |
+| `src/app/` | Next.js App Router pages, layouts, and route handlers. | — |
+| `src/routes/` | Routes for React Router or TanStack Router projects. | — |
+
+<Callout type="info">
+  The rules are folder-scoped, not whole-project. A `.ts` file in `src/lib/`
+  is not linted by this pack because that folder is reserved for code outside
+  your control.
+</Callout>
+
+## Linking to the rules
+
+Some lintable folder have a dedicated rule page that documents every enforced
+convention with a "Do / Don't" example:
+
+<Cards>
+  <Card title="Component rules" href="/docs/components" />
+  <Card title="Method rules" href="/docs/methods" />
+  <Card title="Hook rules" href="/docs/hooks" />
+  <Card title="Interface rules" href="/docs/interfaces" />
+  <Card title="Constant rules" href="/docs/constants" />
+</Cards>

@@ -1,0 +1,261 @@
+---
+title: Method Rules
+description: All rules regarding reusable methods
+---
+
+import { Check, X } from 'lucide-react';
+
+Rules that govern how standalone method files (and the methods declared inside
+component files) are written. Every rule is enabled by the
+[recommended](/docs) config and applies to `.ts` / `.tsx` files inside a
+`/methods/` folder of your project. The two "inside vs. outside components" rules
+are scoped by the folder the file lives in.
+
+## `method-name-camel-case`
+
+Require top-level method names in `/methods/` files to use camelCase.
+
+<div className="not-prose my-6 flex flex-col gap-3">
+  <span className="inline-flex w-fit items-center gap-1 rounded-md border border-green-500/30 bg-green-500/10 px-1.5 py-0.5 text-xs font-medium text-green-600 dark:text-green-400">
+    <Check className="size-3" />
+    Do
+  </span>
+```ts title="src/methods/getRandomNumber.ts"
+export default function getRandomNumber() {
+  return 4
+}
+```
+  <span className="inline-flex w-fit items-center gap-1 rounded-md border border-red-500/30 bg-red-500/10 px-1.5 py-0.5 text-xs font-medium text-red-600 dark:text-red-400">
+    <X className="size-3" />
+    Don't
+  </span>
+```ts title="src/methods/GetRandomNumber.ts"
+function GetRandomNumber() {
+  return 4
+}
+
+export default GetRandomNumber
+```
+</div>
+
+A name is considered camelCase when it starts with a lowercase letter and only
+contains alphanumeric characters — no underscores, no leading capital.
+
+## `method-one-per-file`
+
+Require method files to contain only one top-level method.
+
+<div className="not-prose my-6 flex flex-col gap-3">
+  <span className="inline-flex w-fit items-center gap-1 rounded-md border border-green-500/30 bg-green-500/10 px-1.5 py-0.5 text-xs font-medium text-green-600 dark:text-green-400">
+    <Check className="size-3" />
+    Do
+  </span>
+```ts title="src/methods/parseValue.ts"
+export default function parseValue() {
+  return 'value'
+}
+```
+  <span className="inline-flex w-fit items-center gap-1 rounded-md border border-red-500/30 bg-red-500/10 px-1.5 py-0.5 text-xs font-medium text-red-600 dark:text-red-400">
+    <X className="size-3" />
+    Don't
+  </span>
+```ts title="src/methods/parseValue.ts"
+function parseValue() {
+  return 'value'
+}
+
+function formatValue() {
+  return 'formatted'
+}
+
+export default parseValue
+```
+</div>
+
+If you need a second method, move it to its own file under `src/methods/`. This
+keeps each method easy to find, easy to test, and trivial to lazy-load.
+
+## `method-require-default-export`
+
+Require method files to default export their top-level method.
+
+<div className="not-prose my-6 flex flex-col gap-3">
+  <span className="inline-flex w-fit items-center gap-1 rounded-md border border-green-500/30 bg-green-500/10 px-1.5 py-0.5 text-xs font-medium text-green-600 dark:text-green-400">
+    <Check className="size-3" />
+    Do
+  </span>
+```ts title="src/methods/loadConfig.ts"
+export default function loadConfig() {
+  return { env: 'dev' }
+}
+```
+  <span className="inline-flex w-fit items-center gap-1 rounded-md border border-red-500/30 bg-red-500/10 px-1.5 py-0.5 text-xs font-medium text-red-600 dark:text-red-400">
+    <X className="size-3" />
+    Don't
+  </span>
+```ts title="src/methods/loadConfig.ts"
+function loadConfig() {
+  return { env: 'dev' }
+}
+
+export { loadConfig }
+```
+</div>
+
+A named export would force every caller to know the method's original name. A
+default export lets the importer rename the method to fit the surrounding
+context (e.g. `loadConfig as config`).
+
+## `method-options-interface`
+
+Allow `Options` interfaces in method files only when they are declared locally or
+imported from a `/types/` folder.
+
+<div className="not-prose my-6 flex flex-col gap-3">
+  <span className="inline-flex w-fit items-center gap-1 rounded-md border border-green-500/30 bg-green-500/10 px-1.5 py-0.5 text-xs font-medium text-green-600 dark:text-green-400">
+    <Check className="size-3" />
+    Do
+  </span>
+```ts title="src/methods/buildRequest.ts"
+interface Options {
+  includeMetadata: boolean
+}
+
+export default function buildRequest(id: string, options: Options): string {
+  return options.includeMetadata ? `${id}:meta` : id
+}
+```
+  <span className="inline-flex w-fit items-center gap-1 rounded-md border border-red-500/30 bg-red-500/10 px-1.5 py-0.5 text-xs font-medium text-red-600 dark:text-red-400">
+    <X className="size-3" />
+    Don't
+  </span>
+```ts title="src/methods/saveUser.ts"
+export interface Options {
+  skipValidation: boolean
+}
+
+export default function saveUser(userId: string, options: Options): string {
+  return options.skipValidation ? userId : `${userId}:validated`
+}
+```
+</div>
+
+Shared option objects should live in `/types/`, not be re-exported from the
+method file:
+
+```ts title="src/methods/sendNotification.ts"
+// Imported Options types are allowed when the path is under /types/
+import type SendNotificationOptions from '../types/SendNotificationOptions'
+
+export default function sendNotification(
+  userId: string,
+  options: SendNotificationOptions
+): string {
+  return options.notifyByEmail ? `${userId}:email` : `${userId}:in-app`
+}
+```
+
+The rule enforces all of the following at once:
+
+- An `Options` interface must not be exported from a method file.
+- An `Options` type imported from anywhere other than a `/types/` folder is
+  rejected.
+- A method that uses an `Options` parameter must either declare a local
+  `Options` interface or import it from `/types/`.
+
+<Callout type="info">
+  Importing an `Options` type from a non-`/types/` path is treated the same as a
+  locally declared one — both are reported. The intent is to keep option
+  contracts in one obvious place.
+</Callout>
+
+## `method-outside-components-function-declaration`
+
+Require methods declared outside components to be function declarations. This
+applies to any method in `/methods/` (and any top-level method that is not the
+default-exported component of a `/components/` file).
+
+<div className="not-prose my-6 flex flex-col gap-3">
+  <span className="inline-flex w-fit items-center gap-1 rounded-md border border-green-500/30 bg-green-500/10 px-1.5 py-0.5 text-xs font-medium text-green-600 dark:text-green-400">
+    <Check className="size-3" />
+    Do
+  </span>
+```ts title="src/methods/buildQuery.ts"
+export default function buildQuery() {
+  return 'SELECT 1'
+}
+```
+  <span className="inline-flex w-fit items-center gap-1 rounded-md border border-red-500/30 bg-red-500/10 px-1.5 py-0.5 text-xs font-medium text-red-600 dark:text-red-400">
+    <X className="size-3" />
+    Don't
+  </span>
+```ts title="src/methods/buildQuery.ts"
+const buildQuery = () => {
+  return 'SELECT 1'
+}
+
+export default buildQuery
+```
+</div>
+
+Inline default-exported arrow functions are also rejected:
+
+```ts title="src/methods/formatDate.ts"
+// No name attached to the default export
+export default () => {
+  return '2026-01-01'
+}
+```
+
+## `method-inside-components-arrow-function`
+
+Require methods declared inside component files to use arrow functions. This
+applies to nested functions in `/components/` files.
+
+<div className="not-prose my-6 flex flex-col gap-3">
+  <span className="inline-flex w-fit items-center gap-1 rounded-md border border-green-500/30 bg-green-500/10 px-1.5 py-0.5 text-xs font-medium text-green-600 dark:text-green-400">
+    <Check className="size-3" />
+    Do
+  </span>
+```tsx title="src/components/UserActions.tsx"
+export default function UserActions() {
+  const handleClick = () => {
+    return 'clicked'
+  }
+
+  return <button>{handleClick()}</button>
+}
+```
+  <span className="inline-flex w-fit items-center gap-1 rounded-md border border-red-500/30 bg-red-500/10 px-1.5 py-0.5 text-xs font-medium text-red-600 dark:text-red-400">
+    <X className="size-3" />
+    Don't
+  </span>
+```tsx title="src/components/UserActions.tsx"
+export default function UserActions() {
+  function handleClick() {
+    return 'clicked'
+  }
+
+  return <button>{handleClick()}</button>
+}
+```
+</div>
+
+Named function expressions are rejected for the same reason — arrow functions
+are the convention inside components:
+
+```tsx title="src/components/OrderActions.tsx"
+export default function OrderActions() {
+  const handleSubmit = function handleSubmit() {
+    return 'submitted'
+  }
+
+  return <button>{handleSubmit()}</button>
+}
+```
+
+<Callout type="info">
+  Top-level function declarations in a component file are the component itself
+  (governed by `component-default-export-function-declaration`). This rule only
+  fires for methods that are **nested inside** the component function.
+</Callout>

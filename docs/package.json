@@ -18,6 +18,7 @@
     "next": "16.2.9",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
+    "remark-directive": "^4.0.0",
     "tailwind-merge": "^3.6.0"
   },
   "devDependencies": {
@@ -28,6 +29,7 @@
     "@types/react-dom": "^19.2.3",
     "@wanner.work/oxlint-rules": "workspace:*",
     "oxlint": "^1.69.0",
+    "oxlint-tsgolint": "^0.23.0",
     "postcss": "^8.5.15",
     "tailwindcss": "^4.3.0",
     "typescript": "^6.0.3"

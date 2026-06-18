@@ -1,0 +1,235 @@
+---
+title: Component Rules
+description: All rules regarding react components
+---
+
+import { Check, X } from 'lucide-react';
+
+Rules that govern how React component files are written. Every rule is enabled by the
+[recommended](/docs) config and applies to `.jsx` / `.tsx` files inside a `/components/`
+folder of your project.
+
+## `component-naming-convention`
+
+Require component default export names to start with an uppercase letter and match the
+file name.
+
+<div className="not-prose my-6 flex flex-col gap-3">
+  <span className="inline-flex w-fit items-center gap-1 rounded-md border border-green-500/30 bg-green-500/10 px-1.5 py-0.5 text-xs font-medium text-green-600 dark:text-green-400">
+    <Check className="size-3" />
+    Do
+  </span>
+```tsx title="src/components/ProfileCard.tsx"
+export default function ProfileCard() {
+  return <section>Profile</section>
+}
+```
+  <span className="inline-flex w-fit items-center gap-1 rounded-md border border-red-500/30 bg-red-500/10 px-1.5 py-0.5 text-xs font-medium text-red-600 dark:text-red-400">
+    <X className="size-3" />
+    Don't
+  </span>
+```tsx title="src/components/profileCard.tsx"
+export default function profileCard() {
+  return <section>Profile</section>
+}
+```
+</div>
+
+The rule flags two distinct problems:
+
+- The default export name does not start with an uppercase letter.
+- The default export name does not match the file name (excluding extension).
+
+<div className="not-prose my-6 flex flex-col gap-3">
+  <span className="inline-flex w-fit items-center gap-1 rounded-md border border-green-500/30 bg-green-500/10 px-1.5 py-0.5 text-xs font-medium text-green-600 dark:text-green-400">
+    <Check className="size-3" />
+    Do
+  </span>
+```tsx title="src/components/MatchName.tsx"
+export default function MatchName() {
+  return <section>Match</section>
+}
+```
+  <span className="inline-flex w-fit items-center gap-1 rounded-md border border-red-500/30 bg-red-500/10 px-1.5 py-0.5 text-xs font-medium text-red-600 dark:text-red-400">
+    <X className="size-3" />
+    Don't
+  </span>
+```tsx title="src/components/MismatchName.tsx"
+export default function DifferentName() {
+  return <section>Mismatch</section>
+}
+```
+</div>
+
+## `component-one-per-file`
+
+Require component files to contain only one component.
+
+<div className="not-prose my-6 flex flex-col gap-3">
+  <span className="inline-flex w-fit items-center gap-1 rounded-md border border-green-500/30 bg-green-500/10 px-1.5 py-0.5 text-xs font-medium text-green-600 dark:text-green-400">
+    <Check className="size-3" />
+    Do
+  </span>
+```tsx title="src/components/MainWidget.tsx"
+export default function MainWidget() {
+  return <div>Main</div>
+}
+```
+  <span className="inline-flex w-fit items-center gap-1 rounded-md border border-red-500/30 bg-red-500/10 px-1.5 py-0.5 text-xs font-medium text-red-600 dark:text-red-400">
+    <X className="size-3" />
+    Don't
+  </span>
+```tsx title="src/components/MainWidget.tsx"
+function MainWidget() {
+  return <div>Main</div>
+}
+
+function SecondaryWidget() {
+  return <div>Secondary</div>
+}
+
+export default MainWidget
+```
+</div>
+
+<Callout type="info">
+  The rule looks for any function declaration or `const` initialized with an arrow
+  function / function expression whose name starts with an uppercase letter. Each
+  additional uppercase component declaration after the first is reported.
+</Callout>
+
+If you have a second component in the same file, move it to its own file under
+`src/components/`.
+
+## `component-require-default-export`
+
+Require component files to have a default export.
+
+<div className="not-prose my-6 flex flex-col gap-3">
+  <span className="inline-flex w-fit items-center gap-1 rounded-md border border-green-500/30 bg-green-500/10 px-1.5 py-0.5 text-xs font-medium text-green-600 dark:text-green-400">
+    <Check className="size-3" />
+    Do
+  </span>
+```tsx title="src/components/UserBadge.tsx"
+export default function UserBadge() {
+  return <span>Badge</span>
+}
+```
+  <span className="inline-flex w-fit items-center gap-1 rounded-md border border-red-500/30 bg-red-500/10 px-1.5 py-0.5 text-xs font-medium text-red-600 dark:text-red-400">
+    <X className="size-3" />
+    Don't
+  </span>
+```tsx title="src/components/UserBadge.tsx"
+export function UserBadge() {
+  return <span>Badge</span>
+}
+```
+</div>
+
+Components in `/components/` must be default-exported so they can be imported with a
+clean, locally-controlled name and so tree-shaking and lazy loading behave
+predictably.
+
+## `component-default-export-function-declaration`
+
+Require default exports in component files to be function declarations.
+
+<div className="not-prose my-6 flex flex-col gap-3">
+  <span className="inline-flex w-fit items-center gap-1 rounded-md border border-green-500/30 bg-green-500/10 px-1.5 py-0.5 text-xs font-medium text-green-600 dark:text-green-400">
+    <Check className="size-3" />
+    Do
+  </span>
+```tsx title="src/components/OrderSummary.tsx"
+function OrderSummary() {
+  return <div>Summary</div>
+}
+
+export default OrderSummary
+```
+  <span className="inline-flex w-fit items-center gap-1 rounded-md border border-red-500/30 bg-red-500/10 px-1.5 py-0.5 text-xs font-medium text-red-600 dark:text-red-400">
+    <X className="size-3" />
+    Don't
+  </span>
+```tsx title="src/components/ArrowDefault.tsx"
+const ArrowDefault = () => {
+  return <div>Arrow</div>
+}
+
+export default ArrowDefault
+```
+</div>
+
+Inline default-exported arrow functions are also rejected:
+
+```tsx title="src/components/InlineArrow.tsx"
+// No component name attached to the default export
+export default () => {
+  return <div>Inline</div>
+}
+```
+
+Function declarations are hoisted, have an explicit name (which is great for stack
+traces and React DevTools), and are the convention the rest of this rule pack
+relies on — for example, `component-props-interface` looks up the component by its
+declaration name.
+
+## `component-props-interface`
+
+Require component files to define a local, non-exported `interface Props` at the top
+of the file.
+
+<div className="not-prose my-6 flex flex-col gap-3">
+  <span className="inline-flex w-fit items-center gap-1 rounded-md border border-green-500/30 bg-green-500/10 px-1.5 py-0.5 text-xs font-medium text-green-600 dark:text-green-400">
+    <Check className="size-3" />
+    Do
+  </span>
+```tsx title="src/components/GreetingCard.tsx"
+interface Props {
+  name: string
+}
+
+export default function GreetingCard({ name }: Props) {
+  return <h1>{name}</h1>
+}
+```
+  <span className="inline-flex w-fit items-center gap-1 rounded-md border border-red-500/30 bg-red-500/10 px-1.5 py-0.5 text-xs font-medium text-red-600 dark:text-red-400">
+    <X className="size-3" />
+    Don't
+  </span>
+```tsx title="src/components/ExportedPropsExample.tsx"
+export interface Props {
+  label: string
+}
+
+export default function ExportedPropsExample({ label }: Props) {
+  return <p>{label}</p>
+}
+```
+</div>
+
+The rule enforces all of the following at once:
+
+- A `Props` interface must be declared locally in the file.
+- It must be declared with `interface`, not a `type` alias.
+- It must not be exported.
+- It must be declared before the component's default export.
+- It must be named exactly `Props` — no other interface declarations are allowed in
+  component files.
+
+```tsx title="src/components/AliasPropsExample.tsx"
+// Use `interface Props`, not `type Props`
+type Props = {
+  value: number
+}
+
+export default function AliasPropsExample({ value }: Props) {
+  return <p>{value}</p>
+}
+```
+
+<Callout type="info">
+  If your component needs shared prop types, import them from a `/types/` folder
+  rather than re-declaring or exporting the `Props` interface from the component
+  file. The rule treats an imported type used as the props annotation as a valid
+  exception to the "must declare `Props`" check.
+</Callout>

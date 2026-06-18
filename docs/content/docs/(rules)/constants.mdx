@@ -1,0 +1,167 @@
+---
+title: Constant Rules
+description: All rules regarding readonly constant files
+---
+
+import { Check, X } from 'lucide-react';
+
+Rules that govern how readonly constant files are written. Every rule is enabled
+by the [recommended](/docs) config and applies to `.ts` / `.tsx` files inside a
+`/constants/` folder of your project.
+
+## `constant-naming-convention`
+
+Require readonly constant names to use `UPPERCASE_SNAKE_CASE` — uppercase
+letters, digits, and underscores, with an uppercase first character.
+
+<div className="not-prose my-6 flex flex-col gap-3">
+  <span className="inline-flex w-fit items-center gap-1 rounded-md border border-green-500/30 bg-green-500/10 px-1.5 py-0.5 text-xs font-medium text-green-600 dark:text-green-400">
+    <Check className="size-3" />
+    Do
+  </span>
+```ts title="src/constants/API.ts"
+const API = {
+  path: '/api/v1/',
+  port: '4000'
+}
+
+export default API
+```
+  <span className="inline-flex w-fit items-center gap-1 rounded-md border border-red-500/30 bg-red-500/10 px-1.5 py-0.5 text-xs font-medium text-red-600 dark:text-red-400">
+    <X className="size-3" />
+    Don't
+  </span>
+```ts title="src/constants/apiConfig.ts"
+const apiConfig = {
+  path: '/api/v1/',
+  port: '4000'
+}
+
+export default apiConfig
+```
+</div>
+
+The rule only checks top-level `const` declarations in `/constants/` files, and
+it focuses on the default-exported constant (or the only one if there is no
+default export yet).
+
+## `constant-single-object`
+
+Require constant files to group values into a single top-level object.
+
+<div className="not-prose my-6 flex flex-col gap-3">
+  <span className="inline-flex w-fit items-center gap-1 rounded-md border border-green-500/30 bg-green-500/10 px-1.5 py-0.5 text-xs font-medium text-green-600 dark:text-green-400">
+    <Check className="size-3" />
+    Do
+  </span>
+```ts title="src/constants/API.ts"
+const API = {
+  path: '/api/v1/',
+  port: '4000'
+}
+
+export default API
+```
+  <span className="inline-flex w-fit items-center gap-1 rounded-md border border-red-500/30 bg-red-500/10 px-1.5 py-0.5 text-xs font-medium text-red-600 dark:text-red-400">
+    <X className="size-3" />
+    Don't
+  </span>
+```ts title="src/constants/API.ts"
+const API_PATH = '/api/v1/'
+
+export default API_PATH
+```
+</div>
+
+A single object makes the default export obvious and keeps related values
+together. Primitive constants or multiple top-level objects in the same file
+are rejected.
+
+<Callout type="info">
+  The rule checks for one and only one top-level `const` whose value is an
+  object expression. If you find yourself needing two constants, group them into
+  one object with two keys.
+</Callout>
+
+## `constant-filename-matches-name`
+
+Require constant file names to match constant names (excluding extension).
+
+<div className="not-prose my-6 flex flex-col gap-3">
+  <span className="inline-flex w-fit items-center gap-1 rounded-md border border-green-500/30 bg-green-500/10 px-1.5 py-0.5 text-xs font-medium text-green-600 dark:text-green-400">
+    <Check className="size-3" />
+    Do
+  </span>
+```ts title="src/constants/API.ts"
+const API = {
+  path: '/api/v1/',
+  port: '4000'
+}
+
+export default API
+```
+  <span className="inline-flex w-fit items-center gap-1 rounded-md border border-red-500/30 bg-red-500/10 px-1.5 py-0.5 text-xs font-medium text-red-600 dark:text-red-400">
+    <X className="size-3" />
+    Don't
+  </span>
+```ts title="src/constants/API.ts"
+const API_CONFIG = {
+  path: '/api/v1/',
+  port: '4000'
+}
+
+export default API_CONFIG
+```
+</div>
+
+A matching file name keeps the import path and the constant name in lockstep,
+which matters a lot for constants that are used in many places.
+
+## `constant-require-default-export`
+
+Require constant files to default export their constants object.
+
+<div className="not-prose my-6 flex flex-col gap-3">
+  <span className="inline-flex w-fit items-center gap-1 rounded-md border border-green-500/30 bg-green-500/10 px-1.5 py-0.5 text-xs font-medium text-green-600 dark:text-green-400">
+    <Check className="size-3" />
+    Do
+  </span>
+```ts title="src/constants/API.ts"
+const API = {
+  path: '/api/v1/',
+  port: '4000'
+}
+
+export default API
+```
+  <span className="inline-flex w-fit items-center gap-1 rounded-md border border-red-500/30 bg-red-500/10 px-1.5 py-0.5 text-xs font-medium text-red-600 dark:text-red-400">
+    <X className="size-3" />
+    Don't
+  </span>
+```ts title="src/constants/API.ts"
+const API = {
+  path: '/api/v1/',
+  port: '4000'
+}
+
+export { API }
+```
+</div>
+
+The equivalent `export { Name as default }` form is also accepted:
+
+```ts title="src/constants/API.ts"
+const API = {
+  path: '/api/v1/',
+  port: '4000'
+}
+
+export { API as default }
+```
+
+<Callout type="info">
+  A default export lets the importer rename the constant to fit the surrounding
+  context (e.g. `API as api`) without having to know the original file-level
+  export name. It also keeps the import side tidy: one symbol in, one
+  symbol out.
+</Callout>

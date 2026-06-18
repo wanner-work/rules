@@ -1,0 +1,235 @@
+---
+title: Hook Rules
+description: All rules regarding react hooks
+---
+
+import { Check, X } from 'lucide-react';
+
+Rules that govern how React hook files are written. Every rule is enabled by the
+[recommended](/docs) config and applies to `.ts` / `.tsx` files inside a
+`/hooks/` folder of your project.
+
+## `hook-naming-convention`
+
+Require top-level hook names to start with `use` — the React convention that
+also tells linters and React DevTools which functions are hooks.
+
+<div className="not-prose my-6 flex flex-col gap-3">
+  <span className="inline-flex w-fit items-center gap-1 rounded-md border border-green-500/30 bg-green-500/10 px-1.5 py-0.5 text-xs font-medium text-green-600 dark:text-green-400">
+    <Check className="size-3" />
+    Do
+  </span>
+```ts title="src/hooks/useOnlineStatus.ts"
+export default function useOnlineStatus(): { online: boolean } {
+  return { online: true }
+}
+```
+  <span className="inline-flex w-fit items-center gap-1 rounded-md border border-red-500/30 bg-red-500/10 px-1.5 py-0.5 text-xs font-medium text-red-600 dark:text-red-400">
+    <X className="size-3" />
+    Don't
+  </span>
+```ts title="src/hooks/onlineStatus.ts"
+export default function onlineStatus(): { online: boolean } {
+  return { online: true }
+}
+```
+</div>
+
+The rule flags any top-level function declaration, function variable, or
+exported function whose name does not start with `use`.
+
+## `hook-filename-matches-name`
+
+Require hook file names to match hook names (excluding extension).
+
+<div className="not-prose my-6 flex flex-col gap-3">
+  <span className="inline-flex w-fit items-center gap-1 rounded-md border border-green-500/30 bg-green-500/10 px-1.5 py-0.5 text-xs font-medium text-green-600 dark:text-green-400">
+    <Check className="size-3" />
+    Do
+  </span>
+```ts title="src/hooks/useConnectionState.ts"
+export default function useConnectionState(): { connected: boolean } {
+  return { connected: true }
+}
+```
+  <span className="inline-flex w-fit items-center gap-1 rounded-md border border-red-500/30 bg-red-500/10 px-1.5 py-0.5 text-xs font-medium text-red-600 dark:text-red-400">
+    <X className="size-3" />
+    Don't
+  </span>
+```ts title="src/hooks/useConnectionState.ts"
+export default function useNetworkStatus(): { connected: boolean } {
+  return { connected: true }
+}
+```
+</div>
+
+A matching file name keeps the file locator and the import name in sync, which
+matters a lot for hooks that are used in many places.
+
+## `hook-one-per-file`
+
+Require hook files to contain only one top-level hook.
+
+<div className="not-prose my-6 flex flex-col gap-3">
+  <span className="inline-flex w-fit items-center gap-1 rounded-md border border-green-500/30 bg-green-500/10 px-1.5 py-0.5 text-xs font-medium text-green-600 dark:text-green-400">
+    <Check className="size-3" />
+    Do
+  </span>
+```ts title="src/hooks/useCurrentUser.ts"
+export default function useCurrentUser(): { id: string } {
+  return { id: 'u-1' }
+}
+```
+  <span className="inline-flex w-fit items-center gap-1 rounded-md border border-red-500/30 bg-red-500/10 px-1.5 py-0.5 text-xs font-medium text-red-600 dark:text-red-400">
+    <X className="size-3" />
+    Don't
+  </span>
+```ts title="src/hooks/useCurrentUser.ts"
+export default function useCurrentUser(): { id: string } {
+  return { id: 'u-1' }
+}
+
+function useSessionToken(): string {
+  return 'token'
+}
+```
+</div>
+
+If you have a second hook in the same file, move it to its own file under
+`src/hooks/`. This keeps each hook easy to find, easy to test, and easy to
+lazy-load.
+
+## `hook-require-default-export`
+
+Require hook files to default export their top-level hook.
+
+<div className="not-prose my-6 flex flex-col gap-3">
+  <span className="inline-flex w-fit items-center gap-1 rounded-md border border-green-500/30 bg-green-500/10 px-1.5 py-0.5 text-xs font-medium text-green-600 dark:text-green-400">
+    <Check className="size-3" />
+    Do
+  </span>
+```ts title="src/hooks/useFeatureToggle.ts"
+export default function useFeatureToggle(): { enabled: boolean } {
+  return { enabled: true }
+}
+```
+  <span className="inline-flex w-fit items-center gap-1 rounded-md border border-red-500/30 bg-red-500/10 px-1.5 py-0.5 text-xs font-medium text-red-600 dark:text-red-400">
+    <X className="size-3" />
+    Don't
+  </span>
+```ts title="src/hooks/useFeatureToggle.ts"
+export function useFeatureToggle(): { enabled: boolean } {
+  return { enabled: true }
+}
+```
+</div>
+
+A named export would force every caller to know the hook's original name. A
+default export lets the importer rename the hook to fit the surrounding context
+(e.g. `useFeatureToggle as useToggle`).
+
+## `hook-default-export-function-declaration`
+
+Require the default export in hook files to be a named function declaration.
+
+<div className="not-prose my-6 flex flex-col gap-3">
+  <span className="inline-flex w-fit items-center gap-1 rounded-md border border-green-500/30 bg-green-500/10 px-1.5 py-0.5 text-xs font-medium text-green-600 dark:text-green-400">
+    <Check className="size-3" />
+    Do
+  </span>
+```ts title="src/hooks/useViewport.ts"
+function useViewport(): { width: number } {
+  return { width: 1024 }
+}
+
+export default useViewport
+```
+  <span className="inline-flex w-fit items-center gap-1 rounded-md border border-red-500/30 bg-red-500/10 px-1.5 py-0.5 text-xs font-medium text-red-600 dark:text-red-400">
+    <X className="size-3" />
+    Don't
+  </span>
+```ts title="src/hooks/useViewport.ts"
+const useViewport = (): { width: number } => {
+  return { width: 1024 }
+}
+
+export default useViewport
+```
+</div>
+
+Inline default-exported arrow functions are rejected for the same reason — no
+name is attached to the default export:
+
+```ts title="src/hooks/useViewport.ts"
+// No name attached to the default export
+export default (): { width: number } => {
+  return { width: 1024 }
+}
+```
+
+<Callout type="info">
+  Function declarations are hoisted, have an explicit name (great for React
+  DevTools and the React hook linter), and are the convention the rest of this
+  rule pack relies on.
+</Callout>
+
+## `hook-options-interface`
+
+Allow `Options` interfaces in hook files only when they are declared locally or
+imported from a `/types/` folder.
+
+<div className="not-prose my-6 flex flex-col gap-3">
+  <span className="inline-flex w-fit items-center gap-1 rounded-md border border-green-500/30 bg-green-500/10 px-1.5 py-0.5 text-xs font-medium text-green-600 dark:text-green-400">
+    <Check className="size-3" />
+    Do
+  </span>
+```ts title="src/hooks/useFilters.ts"
+interface Options {
+  includeArchived: boolean
+}
+
+export default function useFilters(options: Options): { active: boolean } {
+  return { active: !options.includeArchived }
+}
+```
+  <span className="inline-flex w-fit items-center gap-1 rounded-md border border-red-500/30 bg-red-500/10 px-1.5 py-0.5 text-xs font-medium text-red-600 dark:text-red-400">
+    <X className="size-3" />
+    Don't
+  </span>
+```ts title="src/hooks/useNotifications.ts"
+import type Options from '../shared/Options'
+
+export default function useNotifications(options: Options): {
+  enabled: boolean
+} {
+  return { enabled: options.notify }
+}
+```
+</div>
+
+Importing `Options` from a `/types/` folder is allowed:
+
+```ts title="src/hooks/useNotifications.ts"
+import type Options from '../types/Options'
+
+export default function useNotifications(options: Options): {
+  enabled: boolean
+} {
+  return { enabled: options.notify }
+}
+```
+
+The rule enforces all of the following at once:
+
+- An `Options` interface must not be exported from a hook file.
+- An `Options` type imported from anywhere other than a `/types/` folder is
+  rejected.
+- A hook that uses an `Options` parameter must either declare a local
+  `Options` interface or import it from `/types/`.
+
+<Callout type="info">
+  The `/types/` folder can be nested — for example
+  `import SubOptions from '../types/sub/SubOptions'` is treated as a valid
+  `/types/` import. The intent is to keep option contracts in one obvious
+  place, no matter how deep that folder happens to be.
+</Callout>
