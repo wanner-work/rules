@@ -6,7 +6,7 @@
     "linting",
     "oxlint"
   ],
-  "homepage": "https://wanner.work/rules",
+  "homepage": "https://rules.wanner.work",
   "bugs": {
     "url": "https://github.com/wanner-work/rules/issues"
   },
