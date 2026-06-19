@@ -1,23 +1,22 @@
-'use client';
-import { useMemo } from 'react';
-import * as THREE from 'three';
-import { PerspectiveCamera } from '@react-three/drei';
-import { degToRad } from 'three/src/math/MathUtils.js';
-
-import { extendMaterial, hexToNormalizedRGB, NOISE } from './extendMaterial';
-import CanvasWrapper from './CanvasWrapper';
-import DirLight from './DirLight';
-import PlaneNoise from './PlaneNoise';
+'use client'
+import { PerspectiveCamera } from '@react-three/drei'
+import { useMemo } from 'react'
+import * as THREE from 'three'
+import { degToRad } from 'three/src/math/MathUtils.js'
+import CanvasWrapper from './CanvasWrapper'
+import DirLight from './DirLight'
+import { extendMaterial, hexToNormalizedRGB, NOISE } from './extendMaterial'
+import PlaneNoise from './PlaneNoise'
 
 interface Props {
-  beamWidth?: number;
-  beamHeight?: number;
-  beamNumber?: number;
-  lightColor?: string;
-  speed?: number;
-  noiseIntensity?: number;
-  scale?: number;
-  rotation?: number;
+  beamWidth?: number
+  beamHeight?: number
+  beamNumber?: number
+  lightColor?: string
+  speed?: number
+  noiseIntensity?: number
+  scale?: number
+  rotation?: number
 }
 
 export default function Beams({
@@ -85,7 +84,7 @@ export default function Beams({
         }
       }),
     [speed, noiseIntensity, scale]
-  );
+  )
 
   return (
     <CanvasWrapper>
@@ -102,5 +101,5 @@ export default function Beams({
       <color attach="background" args={['#000000']} />
       <PerspectiveCamera makeDefault position={[0, 0, 20]} fov={30} />
     </CanvasWrapper>
-  );
+  )
 }

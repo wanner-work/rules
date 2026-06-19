@@ -1,10 +1,10 @@
 {
-  "name": "@wanner.work/oxlint-rules",
-  "version": "1.0.0-rc.3",
-  "description": "oxlint rules to write consistent code.",
+  "name": "@wanner.work/oxfmt-rules",
+  "version": "1.0.0-rc.0",
+  "description": "oxfmt rules to write consistent code.",
   "keywords": [
-    "linting",
-    "oxlint"
+    "formatting",
+    "oxfmt"
   ],
   "homepage": "https://rules.wanner.work",
   "bugs": {
@@ -30,19 +30,20 @@
     "prepublishOnly": "pnpm run build",
     "format": "oxfmt --write .",
     "lint": "oxlint",
+    "check": "node tests/run-oxlint-tests.mjs",
     "release": "bumpp"
   },
   "dependencies": {
     "defu": "6.1.7"
   },
   "devDependencies": {
-    "@types/node": "^25.9.1",
-    "@wanner.work/oxfmt-rules": "workspace:*",
+    "@types/node": "^25.9.3",
+    "@wanner.work/oxlint-rules": "workspace:*",
     "bumpp": "^11.1.0",
     "oxfmt": "^0.52.0",
-    "oxlint": "^1.67.0",
+    "oxlint": "^1.70.0",
     "oxlint-tsgolint": "^0.23.0",
-    "tsdown": "^0.22.0",
+    "tsdown": "^0.22.3",
     "typescript": "7.0.1-rc"
   }
 }

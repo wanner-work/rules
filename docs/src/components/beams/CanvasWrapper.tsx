@@ -1,10 +1,11 @@
-'use client';
-import type { ReactNode } from 'react';
-import { Canvas } from '@react-three/fiber';
-import './Beams.css';
+'use client'
+import { Canvas } from '@react-three/fiber'
+import type { ReactNode } from 'react'
+
+import './Beams.css'
 
 interface Props {
-  children: ReactNode;
+  children: ReactNode
 }
 
 export default function CanvasWrapper({ children }: Props) {
@@ -12,5 +13,5 @@ export default function CanvasWrapper({ children }: Props) {
     <Canvas dpr={[1, 2]} frameloop="always" className="beams-container">
       {children}
     </Canvas>
-  );
+  )
 }

@@ -1,5 +1,3 @@
 import { defineConfigWithRules } from '@wanner.work/oxlint-rules'
 
-export default defineConfigWithRules({
-  plugins: ['nextjs']
-})
+export default defineConfigWithRules()

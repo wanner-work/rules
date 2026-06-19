@@ -1,13 +1,21 @@
 ---
 title: Getting started
-description: What this rule pack is and how to install it.
+description: The wanner.work/rules repo bundles opinionated configs and rule packs. oxlint-rules is the first one — more are on the way.
 ---
 
-`@wanner.work/oxlint-rules` is an [oxlint](https://oxc.rs/docs/guide/usage/linter.html)
-config wrapper that bundles a set of opinionated rules for writing consistent
-React + TypeScript code. It enforces a small folder convention and a set of
-declaration-style rules (component shape, method exports, hook naming, etc.)
-so that every file in your project follows the same pattern.
+`wanner.work/rules` is a monorepo of opinionated configs and rule packs for
+building consistent React + TypeScript projects. Each package is published
+under the `@wanner.work/*` scope and can be installed independently.
+
+The first package in the repo is `@wanner.work/oxlint-rules`, an
+[oxlint](https://oxc.rs/docs/guide/usage/linter.html) config wrapper that
+bundles a set of rules for writing consistent code. It enforces a small folder
+convention and a set of declaration-style rules (component shape, method
+exports, hook naming, etc.) so that every file in your project follows the
+same pattern.
+
+More packages are coming soon — check back, or watch the repo for new
+releases.
 
 ## Installation
 
@@ -34,6 +42,10 @@ export default defineConfigWithRules({
 The `recommended` set is enabled automatically. You can layer your own
 overrides on top — the wrapper uses `defu` under the hood, so the last value
 wins.
+
+## What's in this package
+
+The sections below cover the rules shipped by `@wanner.work/oxlint-rules`.
 
 ## What's next?
 

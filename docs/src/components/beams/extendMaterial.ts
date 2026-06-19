@@ -1,4 +1,4 @@
-import * as THREE from 'three';
+import * as THREE from 'three'
 
 export const NOISE = `
 float random (in vec2 st) {
@@ -75,35 +75,41 @@ float cnoise(vec3 P){
   float n_xyz = mix(n_yz.x,n_yz.y,fade_xyz.x);
   return 2.2 * n_xyz;
 }
-`;
+`
 
 export function extendMaterial(BaseMaterial: any, cfg: any) {
-  const physical: any = THREE.ShaderLib.physical;
-  const { vertexShader: baseVert, fragmentShader: baseFrag, uniforms: baseUniforms } = physical;
-  const baseDefines = physical.defines ?? {};
+  const physical: any = THREE.ShaderLib.physical
+  const {
+    vertexShader: baseVert,
+    fragmentShader: baseFrag,
+    uniforms: baseUniforms
+  } = physical
+  const baseDefines = physical.defines ?? {}
 
-  const uniforms = THREE.UniformsUtils.clone(baseUniforms);
+  const uniforms = THREE.UniformsUtils.clone(baseUniforms)
 
-  const defaults = new BaseMaterial(cfg.material || {});
+  const defaults = new BaseMaterial(cfg.material || {})
 
-  if (defaults.color) uniforms.diffuse.value = defaults.color;
-  if ('roughness' in defaults) uniforms.roughness.value = defaults.roughness;
-  if ('metalness' in defaults) uniforms.metalness.value = defaults.metalness;
-  if ('envMap' in defaults) uniforms.envMap.value = defaults.envMap;
-  if ('envMapIntensity' in defaults) uniforms.envMapIntensity.value = defaults.envMapIntensity;
+  if (defaults.color) uniforms.diffuse.value = defaults.color
+  if ('roughness' in defaults) uniforms.roughness.value = defaults.roughness
+  if ('metalness' in defaults) uniforms.metalness.value = defaults.metalness
+  if ('envMap' in defaults) uniforms.envMap.value = defaults.envMap
+  if ('envMapIntensity' in defaults)
+    uniforms.envMapIntensity.value = defaults.envMapIntensity
 
   Object.entries(cfg.uniforms ?? {}).forEach(([key, u]: [string, any]) => {
-    uniforms[key] = u !== null && typeof u === 'object' && 'value' in u ? u : { value: u };
-  });
+    uniforms[key] =
+      u !== null && typeof u === 'object' && 'value' in u ? u : { value: u }
+  })
 
-  let vert = `${cfg.header}\n${cfg.vertexHeader ?? ''}\n${baseVert}`;
-  let frag = `${cfg.header}\n${cfg.fragmentHeader ?? ''}\n${baseFrag}`;
+  let vert = `${cfg.header}\n${cfg.vertexHeader ?? ''}\n${baseVert}`
+  let frag = `${cfg.header}\n${cfg.fragmentHeader ?? ''}\n${baseFrag}`
 
   for (const [inc, code] of Object.entries(cfg.vertex ?? {})) {
-    vert = vert.replace(inc, `${inc}\n${String(code)}`);
+    vert = vert.replace(inc, `${inc}\n${String(code)}`)
   }
   for (const [inc, code] of Object.entries(cfg.fragment ?? {})) {
-    frag = frag.replace(inc, `${inc}\n${String(code)}`);
+    frag = frag.replace(inc, `${inc}\n${String(code)}`)
   }
 
   const mat = new THREE.ShaderMaterial({
@@ -113,18 +119,18 @@ export function extendMaterial(BaseMaterial: any, cfg: any) {
     fragmentShader: frag,
     lights: true,
     fog: !!cfg.material?.fog
-  });
+  })
 
-  return mat;
+  return mat
 }
 
 export const hexToNormalizedRGB = (hex: string) => {
-  const clean = hex.replace('#', '');
-  const r = parseInt(clean.substring(0, 2), 16);
-  const g = parseInt(clean.substring(2, 4), 16);
-  const b = parseInt(clean.substring(4, 6), 16);
-  return [r / 255, g / 255, b / 255];
-};
+  const clean = hex.replace('#', '')
+  const r = parseInt(clean.substring(0, 2), 16)
+  const g = parseInt(clean.substring(2, 4), 16)
+  const b = parseInt(clean.substring(4, 6), 16)
+  return [r / 255, g / 255, b / 255]
+}
 
 export function createStackedPlanesBufferGeometry(
   n: number,
@@ -133,49 +139,52 @@ export function createStackedPlanesBufferGeometry(
   spacing: number,
   heightSegments: number
 ) {
-  const geometry = new THREE.BufferGeometry();
-  const numVertices = n * (heightSegments + 1) * 2;
-  const numFaces = n * heightSegments * 2;
-  const positions = new Float32Array(numVertices * 3);
-  const indices = new Uint32Array(numFaces * 3);
-  const uvs = new Float32Array(numVertices * 2);
+  const geometry = new THREE.BufferGeometry()
+  const numVertices = n * (heightSegments + 1) * 2
+  const numFaces = n * heightSegments * 2
+  const positions = new Float32Array(numVertices * 3)
+  const indices = new Uint32Array(numFaces * 3)
+  const uvs = new Float32Array(numVertices * 2)
 
-  let vertexOffset = 0;
-  let indexOffset = 0;
-  let uvOffset = 0;
-  const totalWidth = n * width + (n - 1) * spacing;
-  const xOffsetBase = -totalWidth / 2;
+  let vertexOffset = 0
+  let indexOffset = 0
+  let uvOffset = 0
+  const totalWidth = n * width + (n - 1) * spacing
+  const xOffsetBase = -totalWidth / 2
 
   for (let i = 0; i < n; i++) {
-    const xOffset = xOffsetBase + i * (width + spacing);
-    const uvXOffset = Math.random() * 300;
-    const uvYOffset = Math.random() * 300;
+    const xOffset = xOffsetBase + i * (width + spacing)
+    const uvXOffset = Math.random() * 300
+    const uvYOffset = Math.random() * 300
 
     for (let j = 0; j <= heightSegments; j++) {
-      const y = height * (j / heightSegments - 0.5);
-      const v0 = [xOffset, y, 0];
-      const v1 = [xOffset + width, y, 0];
-      positions.set([...v0, ...v1], vertexOffset * 3);
+      const y = height * (j / heightSegments - 0.5)
+      const v0 = [xOffset, y, 0]
+      const v1 = [xOffset + width, y, 0]
+      positions.set([...v0, ...v1], vertexOffset * 3)
 
-      const uvY = j / heightSegments;
-      uvs.set([uvXOffset, uvY + uvYOffset, uvXOffset + 1, uvY + uvYOffset], uvOffset);
+      const uvY = j / heightSegments
+      uvs.set(
+        [uvXOffset, uvY + uvYOffset, uvXOffset + 1, uvY + uvYOffset],
+        uvOffset
+      )
 
       if (j < heightSegments) {
         const a = vertexOffset,
           b = vertexOffset + 1,
           c = vertexOffset + 2,
-          d = vertexOffset + 3;
-        indices.set([a, b, c, c, b, d], indexOffset);
-        indexOffset += 6;
+          d = vertexOffset + 3
+        indices.set([a, b, c, c, b, d], indexOffset)
+        indexOffset += 6
       }
-      vertexOffset += 2;
-      uvOffset += 4;
+      vertexOffset += 2
+      uvOffset += 4
     }
   }
 
-  geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-  geometry.setAttribute('uv', new THREE.BufferAttribute(uvs, 2));
-  geometry.setIndex(new THREE.BufferAttribute(indices, 1));
-  geometry.computeVertexNormals();
-  return geometry;
+  geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
+  geometry.setAttribute('uv', new THREE.BufferAttribute(uvs, 2))
+  geometry.setIndex(new THREE.BufferAttribute(indices, 1))
+  geometry.computeVertexNormals()
+  return geometry
 }

@@ -3,7 +3,7 @@ title: Method Rules
 description: All rules regarding reusable methods
 ---
 
-import { Check, X } from 'lucide-react';
+import { Check, X } from 'lucide-react'
 
 Rules that govern how standalone method files (and the methods declared inside
 component files) are written. Every rule is enabled by the
@@ -65,7 +65,7 @@ function parseValue() {
 }
 
 function formatValue() {
-  return 'formatted'
+return 'formatted'
 }
 
 export default parseValue
@@ -223,9 +223,10 @@ export default function UserActions() {
     return 'clicked'
   }
 
-  return <button>{handleClick()}</button>
+return <button>{handleClick()}</button>
 }
-```
+
+````
   <span className="inline-flex w-fit items-center gap-1 rounded-md border border-red-500/30 bg-red-500/10 px-1.5 py-0.5 text-xs font-medium text-red-600 dark:text-red-400">
     <X className="size-3" />
     Don't
@@ -238,7 +239,8 @@ export default function UserActions() {
 
   return <button>{handleClick()}</button>
 }
-```
+````
+
 </div>
 
 Named function expressions are rejected for the same reason — arrow functions

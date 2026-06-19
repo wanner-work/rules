@@ -3,7 +3,7 @@ title: Interface Rules
 description: All rules regarding interface declarations
 ---
 
-import { Check, X } from 'lucide-react';
+import { Check, X } from 'lucide-react'
 
 Rules that govern how standalone interface files are written. Every rule is
 enabled by the [recommended](/docs) config and applies to `.ts` / `.tsx` files
@@ -90,9 +90,10 @@ export default interface BillingAddress {
 }
 
 interface ShippingAddress {
-  street: string
+street: string
 }
-```
+
+````
 </div>
 
 If you need a second interface, move it to its own file under
@@ -112,7 +113,8 @@ Require the interface in an interface file to be the default export.
 export default interface InvoiceData {
   invoiceId: string
 }
-```
+````
+
   <span className="inline-flex w-fit items-center gap-1 rounded-md border border-red-500/30 bg-red-500/10 px-1.5 py-0.5 text-xs font-medium text-red-600 dark:text-red-400">
     <X className="size-3" />
     Don't

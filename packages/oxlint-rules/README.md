@@ -7,7 +7,7 @@ A oxlint config wrapper with rules to write consistent code.
 Install the plugin in your project:
 
 ```bash
-pnpm add -D @wanner.work/oxlint-rules oxlint
+pnpm add -D @wanner.work/oxlint-rules oxlint oxlint-tsgolint
 ```
 
 Then use the config wrapper.

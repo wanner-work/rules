@@ -3,7 +3,7 @@ title: Component Rules
 description: All rules regarding react components
 ---
 
-import { Check, X } from 'lucide-react';
+import { Check, X } from 'lucide-react'
 
 Rules that govern how React component files are written. Every rule is enabled by the
 [recommended](/docs) config and applies to `.jsx` / `.tsx` files inside a `/components/`
@@ -85,7 +85,7 @@ function MainWidget() {
 }
 
 function SecondaryWidget() {
-  return <div>Secondary</div>
+return <div>Secondary</div>
 }
 
 export default MainWidget
@@ -93,9 +93,10 @@ export default MainWidget
 </div>
 
 <Callout type="info">
-  The rule looks for any function declaration or `const` initialized with an arrow
-  function / function expression whose name starts with an uppercase letter. Each
-  additional uppercase component declaration after the first is reported.
+  The rule looks for any function declaration or `const` initialized with an
+  arrow function / function expression whose name starts with an uppercase
+  letter. Each additional uppercase component declaration after the first is
+  reported.
 </Callout>
 
 If you have a second component in the same file, move it to its own file under

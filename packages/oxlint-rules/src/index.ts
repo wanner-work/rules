@@ -1,3 +1,4 @@
+import * as console from 'node:console'
 import defu from 'defu'
 import { defineConfig, type OxlintConfig } from 'oxlint'
 import COMPONENT_RULES from './rules/componentRules'
@@ -59,15 +60,38 @@ export const recommended = Object.fromEntries(
 ) as Record<string, 'error'>
 
 export function defineConfigWithRules(config?: OxlintConfig) {
-  return defineConfig(
+  const hans = defineConfig(
     defu(
       config,
       defineConfig({
+        options: {
+          typeAware: true,
+          typeCheck: true
+        },
         jsPlugins: ['@wanner.work/oxlint-rules'],
+        plugins: ['import', 'eslint', 'typescript', 'react', 'unicorn', 'oxc'],
         rules: {
-          ...recommended
+          ...recommended,
+          'func-style': ['error', 'declaration', { allowArrowFunctions: true }],
+          'typescript/consistent-type-definitions': 'error',
+          'typescript/no-var-requires': 'off',
+          'typescript/no-floating-promises': 'error',
+          'typescript/no-unsafe-assignment': 'off',
+          'no-unused-vars': [
+            'error',
+            {
+              fix: {
+                imports: 'safe-fix',
+                variables: 'off'
+              }
+            }
+          ]
         }
       })
-    )
+    ) as OxlintConfig
   )
+
+  console.log('hans', hans)
+
+  return hans
 }

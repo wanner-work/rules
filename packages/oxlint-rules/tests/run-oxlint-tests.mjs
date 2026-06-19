@@ -8,7 +8,12 @@ const scriptDir = path.dirname(fileURLToPath(import.meta.url))
 const packageDir = path.resolve(scriptDir, '..', '..')
 const testsDir = scriptDir
 const configPath = path.join(testsDir, 'oxlint.test.config.ts')
-const oxlintBinaryBasePath = path.join(packageDir, 'node_modules', '.bin', 'oxlint')
+const oxlintBinaryBasePath = path.join(
+  packageDir,
+  'node_modules',
+  '.bin',
+  'oxlint'
+)
 const oxlintBinaryPath =
   process.platform === 'win32'
     ? `${oxlintBinaryBasePath}.cmd`

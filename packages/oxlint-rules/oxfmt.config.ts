@@ -1,23 +1,3 @@
-import { defineConfig } from 'oxfmt'
+import { defineConfigWithRules} from '@wanner.work/oxfmt-rules'
 
-export default defineConfig({
-  printWidth: 80,
-  semi: false,
-  trailingComma: 'none',
-  singleQuote: true,
-  sortImports: {
-    newlinesBetween: false,
-    groups: [
-      'builtin',
-      'external',
-      ['internal', 'subpath'],
-      ['parent', 'sibling', 'index'],
-      'unknown',
-      {
-        newlinesBetween: true
-      },
-      'style'
-    ]
-  },
-  sortPackageJson: true
-})
+export default defineConfigWithRules()

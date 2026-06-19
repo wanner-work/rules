@@ -25,9 +25,9 @@ export default function HomePage() {
           for consistent code.
         </h1>
         <p className="max-w-2xl text-balance text-base text-neutral-400 sm:text-lg">
-          A small, opinionated rule pack that turns your coding conventions
-          into enforced guarantees, so every file in your project follows the
-          same pattern.
+          A small, opinionated rule pack that turns your coding conventions into
+          enforced guarantees, so every file in your project follows the same
+          pattern.
         </p>
         <div className="mt-2 flex flex-wrap items-center justify-center gap-3">
           <Link
