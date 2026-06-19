@@ -42,21 +42,21 @@ file.
 
 ## What goes where
 
-| Folder            | Purpose                                                       | Rule pack                                  |
-| ----------------- | ------------------------------------------------------------- | ------------------------------------------ |
-| `src/methods/`    | Standalone, reusable method files.                            | [Method rules](/docs/oxlint-rules/methods) |
-| `src/components/` | React component files (`.jsx` / `.tsx`).                      | [Component rules](/docs/oxlint-rules/components) |
-| `src/hooks/`      | React hook files.                                             | [Hook rules](/docs/oxlint-rules/hooks)     |
-| `src/interfaces/` | Standalone TypeScript interface files.                        | [Interface rules](/docs/oxlint-rules/interfaces) |
-| `src/types/`      | Shared type aliases, generic types, and `Options` interfaces. | —                                          |
-| `src/constants/`  | Readonly constant groups.                                     | [Constant rules](/docs/oxlint-rules/constants) |
-| `src/enums/`      | TypeScript enums.                                             | —                                          |
-| `src/classes/`    | Plain TypeScript classes.                                     | —                                          |
-| `src/styles/`     | Global stylesheets (CSS, SCSS, etc.).                         | —                                          |
-| `src/ui/`         | Generated UI primitives (e.g. `shadcn/ui`).                   | —                                          |
-| `src/lib/`        | Third-party or vendored code that you do not control.         | Linting ignored                            |
-| `src/app/`        | Next.js App Router pages, layouts, and route handlers.        | —                                          |
-| `src/routes/`     | Routes for React Router or TanStack Router projects.          | —                                          |
+| Folder               | Purpose                                                       | Rule pack                                        |
+| -------------------- | ------------------------------------------------------------- | ------------------------------------------------ |
+| `src/methods/`       | Standalone, reusable method files.                            | [Method rules](/docs/oxlint-rules/methods)       |
+| `src/components/`    | React component files (`.jsx` / `.tsx`).                      | [Component rules](/docs/oxlint-rules/components) |
+| `src/components/ui/` | Generated UI primitives (e.g. `shadcn/ui`).                   | —                                                |
+| `src/hooks/`         | React hook files.                                             | [Hook rules](/docs/oxlint-rules/hooks)           |
+| `src/interfaces/`    | Standalone TypeScript interface files.                        | [Interface rules](/docs/oxlint-rules/interfaces) |
+| `src/types/`         | Shared type aliases, generic types, and `Options` interfaces. | —                                                |
+| `src/constants/`     | Readonly constant groups.                                     | [Constant rules](/docs/oxlint-rules/constants)   |
+| `src/enums/`         | TypeScript enums.                                             | —                                                |
+| `src/classes/`       | Plain TypeScript classes.                                     | —                                                |
+| `src/styles/`        | Global stylesheets (CSS, SCSS, etc.).                         | —                                                |
+| `src/lib/`           | Third-party or vendored code that you do not control.         | Linting ignored                                  |
+| `src/app/`           | Next.js App Router pages, layouts, and route handlers.        | —                                                |
+| `src/routes/`        | Routes for React Router or TanStack Router projects.          | —                                                |
 
 <Callout type="info">
   The rules are folder-scoped, not whole-project. A `.ts` file in `src/lib/` is
