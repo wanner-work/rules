@@ -46,8 +46,8 @@ jobs:
           TAG="${GITHUB_REF_NAME#v}"
           for pkg in packages/*/package.json; do
             name=$(node -e "console.log(require('./$pkg').name)")
-            echo "$name"
+            echo "$name @ $ver"
           done
 
       - name: Publish
-        run: pnpm publish -r --filter "${{ github.ref_name }}" --no-git-checks --provenance --access public --report-summary
+        run: pnpm publish -r --filter "${GITHUB_REF_NAME%-v*}" --no-git-checks --provenance --access public --report-summary
