@@ -1,0 +1,36 @@
+---
+title: Options
+description: All configuration options shipped by @wanner.work/oxfmt-rules.
+---
+
+The recommended option set is enabled by default. The tables below show the
+default value for each option. You only need to specify the values you want to
+change when you call `defineConfigWithRules`.
+
+## Layout
+
+| Option          | Default |
+| --------------- | ------- |
+| `printWidth`    | `80`    |
+| `semi`          | `false` |
+| `trailingComma` | `'none'`|
+| `singleQuote`   | `true`  |
+
+## Sorting
+
+| Option            | Default                                         |
+| ----------------- | ----------------------------------------------- |
+| `sortPackageJson` | `true`                                          |
+| `sortImports`     | `newlinesBetween: false` with custom group ordering |
+
+### `sortImports` groups
+
+Imports are sorted in the following order, with a blank line between the
+`unknown` and `style` groups:
+
+1. `builtin`
+2. `external`
+3. `internal`, `subpath`
+4. `parent`, `sibling`, `index`
+5. `unknown`
+6. `style`

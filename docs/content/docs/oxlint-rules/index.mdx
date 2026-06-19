@@ -1,0 +1,53 @@
+---
+title: Getting started
+description: Install and configure @wanner.work/oxlint-rules in your project.
+---
+
+`@wanner.work/oxlint-rules` is an [oxlint](https://oxc.rs/docs/guide/usage/linter.html)
+config wrapper that bundles a set of rules for writing consistent code. It enforces a
+small [folder convention](/docs/folder) and a set of declaration-style rules
+(component shape, method exports, hook naming, etc.) so that every file in your
+project follows the same pattern.
+
+## Installation
+
+Install the package alongside `oxlint` in your project:
+
+```bash
+pnpm add -D @wanner.work/oxlint-rules oxlint oxlint-tsgolint
+```
+
+## Usage
+
+Import `defineConfigWithRules` from the package and use it in place of
+`defineConfig` from `oxlint`. The wrapper merges the recommended rule set into
+your existing config:
+
+```ts title="oxlint.config.ts"
+import { defineConfigWithRules } from '@wanner.work/oxlint-rules'
+
+export default defineConfigWithRules({
+  // your own oxlint config goes here
+})
+```
+
+The `recommended` set is enabled automatically. You can layer your own
+overrides on top — the wrapper uses `defu` under the hood, so the last value
+wins.
+
+## What's in this package
+
+<Callout type="info">
+  The rules are folder-scoped, not whole-project. Adding the package to a
+  project that does not follow the [folder convention](/docs/folder) is harmless
+  — the rules only fire on the folders they care about.
+</Callout>
+
+<Cards>
+  <Card title="Folder convention" href="/docs/folder" />
+  <Card title="Component rules" href="/docs/oxlint-rules/components" />
+  <Card title="Method rules" href="/docs/oxlint-rules/methods" />
+  <Card title="Hook rules" href="/docs/oxlint-rules/hooks" />
+  <Card title="Interface rules" href="/docs/oxlint-rules/interfaces" />
+  <Card title="Constant rules" href="/docs/oxlint-rules/constants" />
+</Cards>

@@ -1,0 +1,11 @@
+{
+  "title": "@wanner.work/oxlint-rules",
+  "pages": [
+    "index",
+    "(rules)/components",
+    "(rules)/constants",
+    "(rules)/hooks",
+    "(rules)/interfaces",
+    "(rules)/methods"
+  ]
+}

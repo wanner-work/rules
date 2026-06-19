@@ -1,0 +1,40 @@
+---
+title: Getting started
+description: Install and configure @wanner.work/oxfmt-rules in your project.
+---
+
+`@wanner.work/oxfmt-rules` is an [oxfmt](https://oxc.rs/docs/guide/usage/formatter.html)
+config wrapper that bundles a set of formatting defaults for writing consistent code.
+The full option reference lives on the [Options](/docs/oxfmt-rules/options) page.
+
+## Installation
+
+Install the package alongside `oxfmt` in your project:
+
+```bash
+pnpm add -D @wanner.work/oxfmt-rules oxfmt
+```
+
+## Usage
+
+Import `defineConfigWithRules` from the package and use it in place of
+`defineConfig` from `oxfmt`. The wrapper merges the recommended option set into
+your existing config:
+
+```ts title="oxfmt.config.ts"
+import { defineConfigWithRules } from '@wanner.work/oxfmt-rules'
+
+export default defineConfigWithRules({
+  // your own oxfmt config goes here
+})
+```
+
+The recommended option set is enabled automatically. You can layer your own
+overrides on top — the wrapper deep-merges your config on top of the defaults,
+so you only need to specify the values you want to change.
+
+## What's in this package
+
+<Cards>
+  <Card title="Options reference" href="/docs/oxfmt-rules/options" />
+</Cards>

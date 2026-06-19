@@ -6,12 +6,9 @@
     "index",
     "---General---",
     "folder",
-    "---Rules---",
-    "(rules)/components",
-    "(rules)/constants",
-    "(rules)/hooks",
-    "(rules)/interfaces",
-    "(rules)/methods",
+    "---Packages---",
+    "oxlint-rules",
+    "oxfmt-rules",
     "---Version History---",
     "(versions)/changelog"
   ]
