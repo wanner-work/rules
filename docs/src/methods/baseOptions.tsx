@@ -1,10 +1,10 @@
 import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared'
 import Navbar from '@/components/navbar/Navbar'
-import { gitConfig } from '@/lib/shared'
+import GIT_CONFIG from '@/constants/GIT_CONFIG'
 
-export function baseOptions(isHomePage: boolean): BaseLayoutProps {
+export default function baseOptions(isHomePage: boolean): BaseLayoutProps {
   const options: BaseLayoutProps = {
-    githubUrl: `https://github.com/${gitConfig.user}/${gitConfig.repo}`
+    githubUrl: `https://github.com/${GIT_CONFIG.user}/${GIT_CONFIG.repo}`
   }
 
   if (isHomePage) {

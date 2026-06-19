@@ -9,6 +9,7 @@ const MESSAGE_IDS = {
   PROPS_INTERFACE_EXPORTED: 'propsInterfaceMustBeLocal',
   PROPS_TYPE_ALIAS_FORBIDDEN: 'propsMustBeInterface',
   PROPS_INTERFACE_TOP_OF_FILE: 'propsInterfaceMustBeAtTop',
+  COMPONENT_FILE_EXTENSION: 'componentFileMustUseTsx',
   INTERFACE_NAME_PASCAL_CASE: 'interfaceNameMustBePascalCase',
   INTERFACE_FILENAME: 'interfaceFileNameMustMatchInterfaceName',
   INTERFACE_ONE_PER_FILE: 'oneInterfacePerFile',

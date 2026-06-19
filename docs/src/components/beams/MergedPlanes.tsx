@@ -2,7 +2,7 @@
 import { useFrame } from '@react-three/fiber'
 import { useMemo, useRef } from 'react'
 import * as THREE from 'three'
-import { createStackedPlanesBufferGeometry } from './extendMaterial'
+import createStackedPlanesBufferGeometry from '@/methods/createStackedPlanesBufferGeometry'
 
 interface Props {
   material: THREE.ShaderMaterial

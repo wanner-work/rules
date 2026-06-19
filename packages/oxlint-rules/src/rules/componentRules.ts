@@ -5,6 +5,7 @@ import getParameterTypeAnnotation from '../methods/getParameterTypeAnnotation'
 import getTypeReferenceIdentifierName from '../methods/getTypeReferenceIdentifierName'
 import isComponentFile from '../methods/isComponentFile'
 import isLintableComponentFile from '../methods/isLintableComponentFile'
+import isLintableComponentFolderFile from '../methods/isLintableComponentFolderFile'
 import startsWithUppercase from '../methods/startsWithUppercase'
 import unwrapTypeWrapper from '../methods/unwrapTypeWrapper'
 import type AstNode from '../types/AstNode'
@@ -508,12 +509,45 @@ const componentPropsInterfaceRule: RuleModule = {
   }
 }
 
+const componentFileExtensionRule: RuleModule = {
+  meta: {
+    type: 'problem',
+    docs: {
+      description: 'Require files in the components folder to use .tsx.'
+    },
+    schema: [],
+    messages: {
+      [MESSAGE_IDS.COMPONENT_FILE_EXTENSION]:
+        'Files in "/components/" must use ".tsx" (or ".jsx").'
+    }
+  },
+  create(context) {
+    return {
+      'Program:exit'(node) {
+        if (!isLintableComponentFolderFile(context)) {
+          return
+        }
+
+        if (isComponentFile(getFilePath(context) ?? '')) {
+          return
+        }
+
+        context.report({
+          node,
+          messageId: MESSAGE_IDS.COMPONENT_FILE_EXTENSION
+        })
+      }
+    }
+  }
+}
+
 const COMPONENT_RULES = {
   componentNamingConventionRule,
   componentOnePerFileRule,
   componentRequireDefaultExportRule,
   componentDefaultExportFunctionDeclarationRule,
-  componentPropsInterfaceRule
+  componentPropsInterfaceRule,
+  componentFileExtensionRule
 }
 
 export default COMPONENT_RULES

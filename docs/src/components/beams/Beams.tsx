@@ -5,7 +5,9 @@ import * as THREE from 'three'
 import { degToRad } from 'three/src/math/MathUtils.js'
 import CanvasWrapper from './CanvasWrapper'
 import DirLight from './DirLight'
-import { extendMaterial, hexToNormalizedRGB, NOISE } from './extendMaterial'
+import NOISE from '@/constants/NOISE'
+import extendMaterial from '@/methods/extendMaterial'
+import hexToNormalizedRGB from '@/methods/hexToNormalizedRGB'
 import PlaneNoise from './PlaneNoise'
 
 interface Props {
@@ -41,7 +43,7 @@ export default function Beams({
   uniform float uSpeed;
   uniform float uNoiseIntensity;
   uniform float uScale;
-  ${NOISE}`,
+  ${NOISE.glsl}`,
         vertexHeader: `
   float getPos(vec3 pos) {
     vec3 noisePos =

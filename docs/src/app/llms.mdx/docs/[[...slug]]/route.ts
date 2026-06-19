@@ -1,5 +1,7 @@
 import { notFound } from 'next/navigation'
-import { getLLMText, getPageMarkdownUrl, source } from '@/lib/source'
+import SOURCE from '@/constants/SOURCE'
+import getLLMText from '@/methods/getLLMText'
+import getPageMarkdownUrl from '@/methods/getPageMarkdownUrl'
 
 export const revalidate = false
 
@@ -8,7 +10,7 @@ export async function GET(
   { params }: RouteContext<'/llms.mdx/docs/[[...slug]]'>
 ) {
   const { slug } = await params
-  const page = source.getPage(slug?.slice(0, -1))
+  const page = SOURCE.loader.getPage(slug?.slice(0, -1))
   if (!page) notFound()
 
   return new Response(await getLLMText(page), {
@@ -19,7 +21,7 @@ export async function GET(
 }
 
 export function generateStaticParams() {
-  return source.getPages().map((page) => ({
+  return SOURCE.loader.getPages().map((page) => ({
     lang: page.locale,
     slug: getPageMarkdownUrl(page).segments
   }))

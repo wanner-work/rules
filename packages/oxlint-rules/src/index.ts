@@ -1,4 +1,3 @@
-import * as console from 'node:console'
 import defu from 'defu'
 import { defineConfig, type OxlintConfig } from 'oxlint'
 import COMPONENT_RULES from './rules/componentRules'
@@ -21,6 +20,7 @@ const plugin: Plugin = {
     'component-default-export-function-declaration':
       COMPONENT_RULES.componentDefaultExportFunctionDeclarationRule,
     'component-props-interface': COMPONENT_RULES.componentPropsInterfaceRule,
+    'component-file-extension': COMPONENT_RULES.componentFileExtensionRule,
     'interface-name-pascal-case': INTERFACE_RULES.interfaceNamePascalCaseRule,
     'interface-filename-matches-name':
       INTERFACE_RULES.interfaceFileNameMatchesNameRule,
@@ -60,7 +60,7 @@ export const recommended = Object.fromEntries(
 ) as Record<string, 'error'>
 
 export function defineConfigWithRules(config?: OxlintConfig) {
-  const hans = defineConfig(
+  return defineConfig(
     defu(
       config,
       defineConfig({
@@ -90,8 +90,4 @@ export function defineConfigWithRules(config?: OxlintConfig) {
       })
     ) as OxlintConfig
   )
-
-  console.log('hans', hans)
-
-  return hans
 }
