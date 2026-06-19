@@ -37,9 +37,9 @@ jobs:
 
       - name: Lint, test, and build
         run: |
+          pnpm --filter "@wanner.work/*" run build
           pnpm --filter "@wanner.work/*" run lint
           pnpm --filter "@wanner.work/*" run check
-          pnpm --filter "@wanner.work/*" run build
 
       - name: Verify versions match tag
         run: |
