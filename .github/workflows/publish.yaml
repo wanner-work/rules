@@ -19,7 +19,7 @@ jobs:
     name: Build & publish
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@8e8c483db84b4bee98c4af39f84211a4b1a74877 # v6.0.0
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
@@ -27,7 +27,7 @@ jobs:
         with:
           version: 11
 
-      - uses: actions/setup-node@1d0ff469b7ec7b3cb93fd4e80b56b950f43acb3e # v6.0.0
+      - uses: actions/setup-node@v6
         with:
           node-version: 24
           registry-url: 'https://registry.npmjs.org'
