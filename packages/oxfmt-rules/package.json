@@ -30,7 +30,6 @@
     "prepublishOnly": "pnpm run build",
     "format": "oxfmt --write .",
     "lint": "oxlint",
-    "check": "node tests/run-oxlint-tests.mjs",
     "release": "bumpp --tag='@wanner.work/oxfmt-rules-v'"
   },
   "dependencies": {
