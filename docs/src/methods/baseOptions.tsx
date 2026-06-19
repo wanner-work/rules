@@ -14,7 +14,7 @@ export default function baseOptions(isHomePage: boolean): BaseLayoutProps {
   } else {
     options.nav = {
       title: (
-        <p className="text-black text-xs flex gap-2 items-center pl-2">
+        <p className="text-black dark:text-white text-xs flex gap-2 items-center pl-2">
           <span className="opacity-50">wanner.work</span>
           <span className="rotate-30 text-[8px] opacity-50">|</span>
           <span>rules</span>
