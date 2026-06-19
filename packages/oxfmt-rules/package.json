@@ -31,7 +31,7 @@
     "format": "oxfmt --write .",
     "lint": "oxlint",
     "check": "node tests/run-oxlint-tests.mjs",
-    "release": "bumpp"
+    "release": "bumpp --tag='@wanner.work/oxfmt-rules-v'"
   },
   "dependencies": {
     "defu": "6.1.7"

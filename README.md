@@ -62,7 +62,7 @@ pnpm --filter @wanner.work/oxfmt-rules format
 ### Publishing
 
 All `@wanner.work/*` packages are published to npm via GitHub Actions on every
-version tag (`v*`). See [`.github/workflows/publish.yaml`](./.github/workflows/publish.yaml).
+version tag (`@wanner.work/<package>-v*`). See [`.github/workflows/publish.yaml`](./.github/workflows/publish.yaml).
 
 ```bash
 pnpm --filter @wanner.work/oxlint-rules release

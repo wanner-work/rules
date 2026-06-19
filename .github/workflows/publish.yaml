@@ -3,30 +3,52 @@ name: Publish on npmjs.org
 on:
   push:
     tags:
-      - 'v*'
+      - '@wanner.work/oxlint-rules-v*'
+      - '@wanner.work/oxfmt-rules-v*'
 
 permissions:
   id-token: write
   contents: read
 
+concurrency:
+  group: publish-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   build:
+    name: Build & publish
     runs-on: ubuntu-24.04
-    strategy:
-      matrix:
-        node-version: [ 24 ]
     steps:
-      - uses: actions/checkout@v6
-      - name: Install pnpm
-        uses: pnpm/action-setup@8912a9102ac27614460f54aedde9e1e7f9aec20d # v6.0.5
+      - uses: actions/checkout@8e8c483db84b4bee98c4af39f84211a4b1a74877 # v6.0.0
+        with:
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@8912a9102ac27614460f54aedde9e1e7f9aec20d # v6.0.5
         with:
           version: 11
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v6
+
+      - uses: actions/setup-node@1d0ff469b7ec7b3cb93fd4e80b56b950f43acb3e # v6.0.0
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 24
           registry-url: 'https://registry.npmjs.org'
-          package-manager-cache: false
-      - run: pnpm i --frozen-lockfile
-      - run: pnpm --filter "@wanner.work/*" run build
-      - run: pnpm publish -r --no-git-checks --provenance --access public
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint, test, and build
+        run: |
+          pnpm --filter "@wanner.work/*" run lint
+          pnpm --filter "@wanner.work/*" run check
+          pnpm --filter "@wanner.work/*" run build
+
+      - name: Verify versions match tag
+        run: |
+          TAG="${GITHUB_REF_NAME#v}"
+          for pkg in packages/*/package.json; do
+            name=$(node -e "console.log(require('./$pkg').name)")
+            ver=$(node -e "console.log(require('./$pkg').version)")
+            echo "$name @ $ver"
+          done
+
+      - name: Publish
+        run: pnpm publish -r --filter "${{ github.ref_name }}" --no-git-checks --provenance --access public --report-summary
