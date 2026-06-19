@@ -1,3 +1,3 @@
-import { defineConfigWithRules } from '@wanner.work/oxlint-rules'
+import { defineConfigWithRules } from '../oxlint-rules/dist/index.mjs'
 
 export default defineConfigWithRules()

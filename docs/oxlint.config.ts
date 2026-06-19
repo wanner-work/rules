@@ -1,4 +1,4 @@
-import { defineConfigWithRules } from '@wanner.work/oxlint-rules'
+import { defineConfigWithRules } from '../packages/oxlint-rules/dist/index.mjs'
 
 export default defineConfigWithRules({
   plugins: ['nextjs']

@@ -1,3 +1,3 @@
-import { defineConfigWithRules } from '@wanner.work/oxfmt-rules'
+import { defineConfigWithRules } from '../packages/oxfmt-rules/dist/index.mjs'
 
 export default defineConfigWithRules()
