@@ -1,4 +1,5 @@
 {
   "title": "@wanner.work/oxfmt-rules",
-  "pages": ["index", "options"]
+  "defaultOpen": true,
+  "pages": ["index", "options", "---Version History---", "changelog"]
 }

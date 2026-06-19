@@ -11,15 +11,32 @@ The two packages in the repo today are:
 
 - [`@wanner.work/oxlint-rules`](/docs/oxlint-rules) — an
   [oxlint](https://oxc.rs/docs/guide/usage/linter.html) config wrapper that
-  bundles a set of rules for writing consistent code. It enforces a small
-  [folder convention](/docs/folder) and a set of declaration-style rules
-  (component shape, method exports, hook naming, etc.) so that every file in
-  your project follows the same pattern.
+  bundles a set of rules for writing consistent code. It enforces the folder
+  convention described below and a set of declaration-style rules (component
+  shape, method exports, hook naming, etc.) so that every file in your project
+  follows the same pattern.
 - [`@wanner.work/oxfmt-rules`](/docs/oxfmt-rules) — an
   [oxfmt](https://oxc.rs/docs/guide/usage/formatter.html) config wrapper that
   bundles a set of formatting defaults. The wrapper is intentionally light:
   it ships opinionated values for the common layout and sorting options, and
   stays out of your way for everything else.
+
+## Folder convention
+
+Every project that uses any `@wanner.work/*` rule pack is expected to follow
+a single folder convention: one `src/` directory at the project root, with one
+well-named folder per kind of file. Components go in `src/components/`, hooks
+in `src/hooks/`, methods in `src/methods/`, interfaces in `src/interfaces/`,
+and so on. The rules are folder-scoped — a file only needs to follow the
+convention of the folder it lives in.
+
+<Callout type="info">
+  Not every folder is required. Add the ones that match what your project
+  actually contains; the rules only fire on the folders that exist.
+</Callout>
+
+See the [Folder convention](/docs/folder) page for the full tree and the
+detailed "what goes where" table.
 
 ## Packages
 
@@ -32,10 +49,4 @@ The two packages in the repo today are:
     Opinionated formatting defaults with built-in import and `package.json`
     sorting.
   </Card>
-</Cards>
-
-## General
-
-<Cards>
-  <Card title="Folder convention" href="/docs/folder" />
 </Cards>

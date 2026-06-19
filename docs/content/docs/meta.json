@@ -8,8 +8,6 @@
     "folder",
     "---Packages---",
     "oxlint-rules",
-    "oxfmt-rules",
-    "---Version History---",
-    "(versions)/changelog"
+    "oxfmt-rules"
   ]
 }
