@@ -46,8 +46,7 @@ jobs:
           TAG="${GITHUB_REF_NAME#v}"
           for pkg in packages/*/package.json; do
             name=$(node -e "console.log(require('./$pkg').name)")
-            ver=$(node -e "console.log(require('./$pkg').version)")
-            echo "$name @ $ver"
+            echo "$name"
           done
 
       - name: Publish
