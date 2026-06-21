@@ -23,16 +23,16 @@ file.
     ├── styles/
     ├── methods/
     ├── components/
+    │   └── ui/    (optional for shadcn/ui)
     ├── hooks/
     ├── interfaces/
     ├── types/
     ├── constants/
     ├── enums/
     ├── classes/
-    ├── ui/        (shadcn/ui)
-    ├── lib/       (external files — linting ignored)
-    ├── app/       (Next.js app router)
-    └── routes/    (React Router / TanStack Router)
+    ├── lib/       (optional for external files — linting ignored)
+    ├── app/       (optional only for Next.js app router)
+    └── routes/    (optional only for React Router / TanStack Router)
 ```
 
 <Callout type="info">
@@ -62,6 +62,40 @@ file.
   The rules are folder-scoped, not whole-project. A `.ts` file in `src/lib/` is
   not linted by this pack because that folder is reserved for code outside your
   control.
+</Callout>
+
+## Naming
+
+All folder names **must be lowercase**. Use only lowercase letters, digits, and
+hyphens. No uppercase letters, no underscores, no spaces.
+
+```text
+src/components/         ok
+src/Components/         no   uppercase
+src/user_auth/          no   underscore
+src/UserProfile/        no   uppercase
+```
+
+<Callout type="info">
+  This applies to every folder in the convention — including nested ones like
+  `src/components/ui/`.
+</Callout>
+
+## Styles
+
+All stylesheets (`.css`, `.scss`, `.sass`, `.less`, etc.) **must live inside
+`src/styles/`**. Placing CSS files anywhere else in the project is not allowed.
+
+```text
+src/styles/global.css       ok
+src/components/button.scss  no   stylesheet outside src/styles/
+src/hooks/use-theme.css     no   stylesheet outside src/styles/
+```
+
+<Callout type="info">
+  Co-located styles (e.g. a `Button.module.css` next to `Button.tsx`) are not
+  permitted under this convention. Move all styles into `src/styles/` and import
+  them from there.
 </Callout>
 
 ## Linking to the rules
