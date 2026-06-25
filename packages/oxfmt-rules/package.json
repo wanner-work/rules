@@ -30,7 +30,7 @@
     "prepublishOnly": "pnpm run build",
     "format": "oxfmt --write .",
     "lint": "oxlint",
-    "release": "bumpp --commit='chore: release {name} v{version}' --tag='@wanner.work/oxfmt-rules-v'"
+    "release": "bumpp --commit='chore: release oxfmt rules v' --tag='@wanner.work/oxfmt-rules-v'"
   },
   "dependencies": {
     "defu": "6.1.7"
