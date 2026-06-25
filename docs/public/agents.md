@@ -38,6 +38,51 @@ Rules:
 - All stylesheets (`.css`, `.scss`, `.sass`, `.less`, ...) **must live inside
   `src/styles/`**. Co-located styles next to components are not allowed.
 
+### Subfolders (guideline)
+
+The tree above is the minimum shape. For anything beyond a small project,
+**group related files into subfolders** organized by feature, domain, or any
+other useful boundary. Do not dump files flat into `src/components/`,
+`src/methods/`, etc. when the folder is clearly going to grow — a flat dump does
+not scale and the folder name should tell the reader what the files inside are
+for.
+
+Subfolders can nest as deep as useful. There is no fixed depth and no required
+grouping scheme (feature, domain, layer, etc. are all fine) — pick whatever
+makes the project easy to navigate.
+
+```text
+src/
+├── components/
+│   ├── auth/
+│   │   ├── LoginForm.tsx
+│   │   └── SignupForm.tsx
+│   ├── dashboard/
+│   │   ├── charts/
+│   │   │   └── RevenueChart.tsx
+│   │   └── Overview.tsx
+│   └── ui/                 # shadcn/ui — stays flat (CLI-managed)
+├── methods/
+│   ├── user/
+│   │   ├── createUser.ts
+│   │   └── deleteUser.ts
+│   └── formatting/
+│       └── formatCurrency.ts
+└── hooks/
+    ├── auth/
+    │   └── useSession.ts
+    └── user/
+        └── useProfile.ts
+```
+
+`src/components/ui/` is the one folder that stays flat — it holds generated
+shadcn/ui primitives managed by the CLI, not grouped by feature.
+
+This is a guideline, not a lint rule. The oxlint rule pack only enforces
+per-file conventions (naming, exports, props interface, etc.) regardless of how
+deep a file sits inside its top-level folder. When generating or refactoring
+code for a non-trivial project, default to subfolders rather than a flat list.
+
 ## Component rules — `src/components/` (`.jsx` / `.tsx`)
 
 ### `component-naming-convention`
@@ -408,5 +453,8 @@ conventions so output passes lint and format:
   method/hook file.
 - Stylesheets: only in `src/styles/`.
 - Folder names: lowercase only.
+- For non-trivial projects, group files into nested subfolders (by feature,
+  domain, or any useful boundary) instead of a flat dump. `src/components/ui/`
+  is the one folder that stays flat.
 - Use `interface`, not `type`, for object shapes (per
   `typescript/consistent-type-definitions`).

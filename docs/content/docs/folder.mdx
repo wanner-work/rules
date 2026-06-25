@@ -64,6 +64,53 @@ file.
   control.
 </Callout>
 
+## Subfolders
+
+The tree above shows the minimum shape of a project. For anything beyond a
+small project, drop files into **subfolders** organized by feature, domain, or
+any other useful boundary. A flat dump of files in `src/components/`,
+`src/methods/`, etc. does not scale — group related files together so the
+folder itself tells you what the files are for.
+
+Subfolders can nest as deep as useful. There is no fixed depth and no required
+grouping scheme (feature, domain, layer, etc. are all fine) — pick whatever
+makes the project easy to navigate.
+
+```text
+src/
+├── components/
+│   ├── auth/
+│   │   ├── LoginForm.tsx
+│   │   └── SignupForm.tsx
+│   ├── dashboard/
+│   │   ├── charts/
+│   │   │   └── RevenueChart.tsx
+│   │   └── Overview.tsx
+│   └── ui/                 (shadcn/ui — stays flat)
+├── methods/
+│   ├── user/
+│   │   ├── createUser.ts
+│   │   └── deleteUser.ts
+│   └── formatting/
+│       └── formatCurrency.ts
+└── hooks/
+    ├── auth/
+    │   └── useSession.ts
+    └── user/
+        └── useProfile.ts
+```
+
+<Callout type="info">
+  `src/components/ui/` is the one folder that stays flat. It holds generated
+  shadcn/ui primitives that are managed by the CLI, not grouped by feature.
+</Callout>
+
+<Callout type="info">
+  This is a guideline, not a lint rule. The oxlint rule pack only enforces
+  per-file conventions (naming, exports, props interface, etc.) regardless of
+  how deep a file sits inside its top-level folder.
+</Callout>
+
 ## Naming
 
 All folder names **must be lowercase**. Use only lowercase letters, digits, and
