@@ -9,7 +9,7 @@ export default function isInterfaceFile(filePath: string): boolean {
 
   return (
     FILE_PATTERNS.INTERFACE.test(rootedPath) &&
-    (rootedPath.includes(FOLDERS.INTERFACES) ||
-      rootedPath.includes(FOLDERS.TYPES))
+    (rootedPath.includes(`/src${FOLDERS.INTERFACES}`) ||
+      rootedPath.includes(`/src${FOLDERS.TYPES}`))
   )
 }

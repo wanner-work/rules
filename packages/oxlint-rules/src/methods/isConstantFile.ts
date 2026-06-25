@@ -9,6 +9,6 @@ export default function isConstantFile(filePath: string): boolean {
 
   return (
     FILE_PATTERNS.CONSTANT.test(rootedPath) &&
-    rootedPath.includes(FOLDERS.CONSTANTS)
+    rootedPath.includes(`/src${FOLDERS.CONSTANTS}`)
   )
 }

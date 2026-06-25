@@ -6,5 +6,5 @@ export default function isComponentFolderFile(filePath: string): boolean {
   const normalizedPath = toPosixPath(filePath)
   const rootedPath = ensureLeadingSlash(normalizedPath)
 
-  return rootedPath.includes(FOLDERS.COMPONENTS)
+  return rootedPath.includes(`/src${FOLDERS.COMPONENTS}`)
 }

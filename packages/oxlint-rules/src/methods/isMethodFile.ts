@@ -9,6 +9,6 @@ export default function isMethodFile(filePath: string): boolean {
 
   return (
     FILE_PATTERNS.METHOD.test(rootedPath) &&
-    rootedPath.includes(FOLDERS.METHODS)
+    rootedPath.includes(`/src${FOLDERS.METHODS}`)
   )
 }

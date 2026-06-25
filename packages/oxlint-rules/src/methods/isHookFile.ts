@@ -8,6 +8,7 @@ export default function isHookFile(filePath: string): boolean {
   const rootedPath = ensureLeadingSlash(normalizedPath)
 
   return (
-    FILE_PATTERNS.HOOK.test(rootedPath) && rootedPath.includes(FOLDERS.HOOKS)
+    FILE_PATTERNS.HOOK.test(rootedPath) &&
+    rootedPath.includes(`/src${FOLDERS.HOOKS}`)
   )
 }

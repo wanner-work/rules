@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 :::section{#versions}
 
+## [1.0.1] - 2026-06-25
+
+- Change to src/{folder} to prevent issues with src/types/components or similar.
+
 ## [1.0.0] - 2026-06-18
 
 - Initial release
