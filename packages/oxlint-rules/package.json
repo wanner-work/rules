@@ -38,12 +38,12 @@
   },
   "devDependencies": {
     "@types/node": "^25.9.1",
+    "@typescript/native-preview": "^7.0.0-dev.20260624.1",
     "bumpp": "^11.1.0",
     "oxfmt": "^0.52.0",
     "oxlint": "^1.70.0",
     "oxlint-tsgolint": "^0.23.0",
-    "tsdown": "^0.22.0",
-    "typescript": "7.0.1-rc"
+    "tsdown": "^0.22.0"
   },
   "peerDependencies": {
     "oxlint": "^1.70.0"
