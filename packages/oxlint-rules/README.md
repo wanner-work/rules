@@ -29,6 +29,7 @@ export default defineConfigWithRules({
 | `rules/component-require-default-export`               | Require component files to have a default export.                                       |
 | `rules/component-default-export-function-declaration`  | Require component default exports to be function declarations.                          |
 | `rules/component-props-interface`                      | Require a local, non-exported `interface Props` in component files.                     |
+| `rules/component-outside-components-folder`            | Disallow component definitions outside the `/components` folder (warning).              |
 | `rules/interface-name-pascal-case`                     | Require interface names to use PascalCase.                                              |
 | `rules/interface-filename-matches-name`                | Require interface file names to match interface names.                                  |
 | `rules/interface-one-per-file`                         | Require exactly one interface declaration per interface file.                           |

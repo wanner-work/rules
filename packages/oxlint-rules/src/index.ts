@@ -21,6 +21,8 @@ const plugin: Plugin = {
       COMPONENT_RULES.componentDefaultExportFunctionDeclarationRule,
     'component-props-interface': COMPONENT_RULES.componentPropsInterfaceRule,
     'component-file-extension': COMPONENT_RULES.componentFileExtensionRule,
+    'component-outside-components-folder':
+      COMPONENT_RULES.componentOutsideComponentsFolderRule,
     'interface-name-pascal-case': INTERFACE_RULES.interfaceNamePascalCaseRule,
     'interface-filename-matches-name':
       INTERFACE_RULES.interfaceFileNameMatchesNameRule,
@@ -55,9 +57,16 @@ const plugin: Plugin = {
 
 export default plugin
 
+const WARN_RULES = new Set<string>([
+  'rules/component-outside-components-folder'
+])
+
 export const recommended = Object.fromEntries(
-  Object.keys(plugin.rules).map((ruleName) => [`rules/${ruleName}`, 'error'])
-) as Record<string, 'error'>
+  Object.keys(plugin.rules).map((ruleName) => [
+    `rules/${ruleName}`,
+    WARN_RULES.has(`rules/${ruleName}`) ? 'warn' : 'error'
+  ])
+) as Record<string, 'error' | 'warn'>
 
 export function defineConfigWithRules(config?: OxlintConfig) {
   return defineConfig(

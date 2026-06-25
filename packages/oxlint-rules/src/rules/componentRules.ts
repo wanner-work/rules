@@ -4,6 +4,7 @@ import getFilePath from '../methods/getFilePath'
 import getParameterTypeAnnotation from '../methods/getParameterTypeAnnotation'
 import getTypeReferenceIdentifierName from '../methods/getTypeReferenceIdentifierName'
 import isComponentFile from '../methods/isComponentFile'
+import isComponentFolderFile from '../methods/isComponentFolderFile'
 import isLintableComponentFile from '../methods/isLintableComponentFile'
 import isLintableComponentFolderFile from '../methods/isLintableComponentFolderFile'
 import startsWithUppercase from '../methods/startsWithUppercase'
@@ -541,13 +542,79 @@ const componentFileExtensionRule: RuleModule = {
   }
 }
 
+const componentOutsideComponentsFolderRule: RuleModule = {
+  meta: {
+    type: 'problem',
+    docs: {
+      description:
+        'Disallow component definitions outside the "/components/" folder.'
+    },
+    schema: [],
+    messages: {
+      [MESSAGE_IDS.COMPONENT_OUTSIDE_COMPONENTS_FOLDER]:
+        'Component "{{name}}" must live inside the "/components/" folder.'
+    }
+  },
+  create(context) {
+    const componentDeclarations: Array<{ name: string; node: AstNode }> = []
+
+    function registerComponentDeclaration(name: string, node: AstNode): void {
+      if (startsWithUppercase(name)) {
+        componentDeclarations.push({ name, node })
+      }
+    }
+
+    return {
+      FunctionDeclaration(node) {
+        if (node.id?.type === 'Identifier') {
+          registerComponentDeclaration(node.id.name, node.id)
+        }
+      },
+      VariableDeclarator(node) {
+        if (
+          node.id.type !== 'Identifier' ||
+          !node.init ||
+          (node.init.type !== 'ArrowFunctionExpression' &&
+            node.init.type !== 'FunctionExpression')
+        ) {
+          return
+        }
+
+        registerComponentDeclaration(node.id.name, node.id)
+      },
+      'Program:exit'() {
+        const filePath = getFilePath(context)
+
+        if (!filePath || filePath === '<input>') {
+          return
+        }
+
+        if (isComponentFolderFile(filePath)) {
+          return
+        }
+
+        componentDeclarations.forEach(({ name, node }) => {
+          context.report({
+            node,
+            messageId: MESSAGE_IDS.COMPONENT_OUTSIDE_COMPONENTS_FOLDER,
+            data: {
+              name
+            }
+          })
+        })
+      }
+    }
+  }
+}
+
 const COMPONENT_RULES = {
   componentNamingConventionRule,
   componentOnePerFileRule,
   componentRequireDefaultExportRule,
   componentDefaultExportFunctionDeclarationRule,
   componentPropsInterfaceRule,
-  componentFileExtensionRule
+  componentFileExtensionRule,
+  componentOutsideComponentsFolderRule
 }
 
 export default COMPONENT_RULES

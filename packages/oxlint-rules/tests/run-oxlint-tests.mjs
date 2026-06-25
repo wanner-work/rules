@@ -33,7 +33,10 @@ const failures = []
 
 function runOxlint(targetPath) {
   return new Promise((resolve) => {
-    const child = spawn(oxlintCommand, ['--config', configPath, targetPath], {
+    const child = spawn(
+      oxlintCommand,
+      ['--deny-warnings', '--config', configPath, targetPath],
+      {
       cwd: packageDir,
       stdio: ['ignore', 'pipe', 'pipe']
     })

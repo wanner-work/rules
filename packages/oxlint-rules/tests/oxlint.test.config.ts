@@ -13,6 +13,7 @@ export default defineConfig({
     'rules/component-default-export-function-declaration': 'error',
     'rules/component-props-interface': 'error',
     'rules/component-file-extension': 'error',
+    'rules/component-outside-components-folder': 'warn',
     'rules/interface-name-pascal-case': 'error',
     'rules/interface-filename-matches-name': 'error',
     'rules/interface-one-per-file': 'error',
