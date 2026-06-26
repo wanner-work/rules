@@ -1,14 +1,13 @@
 import FILE_PATTERNS from '../constants/FILE_PATTERNS'
-import FOLDERS from '../constants/FOLDERS'
 import { ensureLeadingSlash } from './toPosixPath'
 import toPosixPath from './toPosixPath'
+import isInFolder from './isInFolder'
 
 export default function isComponentFile(filePath: string): boolean {
   const normalizedPath = toPosixPath(filePath)
   const rootedPath = ensureLeadingSlash(normalizedPath)
 
   return (
-    FILE_PATTERNS.COMPONENT.test(rootedPath) &&
-    rootedPath.includes(FOLDERS.COMPONENTS)
+    FILE_PATTERNS.COMPONENT.test(rootedPath) && isInFolder(filePath, 'components')
   )
 }
