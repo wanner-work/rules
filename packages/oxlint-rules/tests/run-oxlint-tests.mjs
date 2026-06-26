@@ -37,9 +37,10 @@ function runOxlint(targetPath) {
       oxlintCommand,
       ['--deny-warnings', '--config', configPath, targetPath],
       {
-      cwd: packageDir,
-      stdio: ['ignore', 'pipe', 'pipe']
-    })
+        cwd: packageDir,
+        stdio: ['ignore', 'pipe', 'pipe']
+      }
+    )
 
     let stdout = ''
     let stderr = ''

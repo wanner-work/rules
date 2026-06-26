@@ -1,7 +1,7 @@
 import FILE_PATTERNS from '../constants/FILE_PATTERNS'
+import isInFolder from './isInFolder'
 import { ensureLeadingSlash } from './toPosixPath'
 import toPosixPath from './toPosixPath'
-import isInFolder from './isInFolder'
 
 export default function isInterfaceFile(filePath: string): boolean {
   const normalizedPath = toPosixPath(filePath)
